@@ -37,7 +37,7 @@ create table ÖğrenciMüsaitlikDurumu (
   saat_id int,
   primary key(okul_no,gün,saat_id),
   foreign key (okul_no) references Öğrenci(okul_no),
-  foreign key (okul_no) references ÖğrenciMüsaitSaatler(id)
+  foreign key (saat_id) references ÖğrenciMüsaitSaatler(id)
   
 );
 
