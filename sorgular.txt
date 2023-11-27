@@ -1,0 +1,101 @@
+Sorgular:
+
+ne istiyor	komut		
+personelin tüm bilgileri	select *from Personel where personel_id = 501;		
+öğrencinin bilgileri	select *from Öğrenci where okul_no = 1;		
+verilen ders koduna göre ders bilgisi	SELECT		
+	ders.ders_adı,		
+	ad.kontenjan,		
+	ad.talep,		
+	zaman.saat,		
+	gun.gün		
+	FROM		
+	Ders ders		
+	JOIN		
+	AçılanDers ad ON ders.ders_kodu = ad.ders_kodu		
+	JOIN		
+	AçılanDersZamanları zaman ON ad.ders_kodu = zaman.ders_kodu		
+	JOIN		
+	AçılanDersGünleri gun ON zaman.gün_id = gun.gün_id		
+	WHERE		
+	ders.ders_kodu = 1001;		
+kurum gider_id ye göre bilgiler	select *from kurumgiderleri where kurumgiderleri.gider_id = 5000;		
+stok id ye göre bilgiler	select *from stok where stok.stok_id = 3000;		
+öğrencinin aldığı derslerin adlarını, saatlerini ve günlerini listeleyecektir. okul no ya göre	SELECT		
+	ders.ders_adı AS aldığı_ders,		
+	zaman.saat,		
+	gün.gün		
+	FROM		
+	Öğrenci öğrenci		
+	JOIN		
+	DersiAlır alır ON öğrenci.okul_no = alır.okul_no		
+	JOIN		
+	AçılanDers ad ON alır.ders_kodu = ad.ders_kodu		
+	JOIN		
+	AçılanDersZamanları zaman ON ad.ders_kodu = zaman.ders_kodu		
+	JOIN		
+	AçılanDersGünleri gün ON zaman.gün_id = gün.gün_id		
+	JOIN		
+	Ders ders ON ad.ders_kodu = ders.ders_kodu		
+	WHERE		
+	öğrenci.okul_no = 1;		
+Öğretmenin personel_id'sine göre öğretmenin verdiği dersleri, günleri ve saatleri göster	SELECT		
+	ders.ders_adı AS verdiği_ders,		
+	zaman.saat,		
+	gün.gün		
+	FROM		
+	Öğretmen öğretmen		
+	JOIN		
+	DersiVerir ders_verir ON öğretmen.personel_id = ders_verir.personel_id		
+	JOIN		
+	AçılanDers ad ON ders_verir.ders_kodu = ad.ders_kodu		
+	JOIN		
+	AçılanDersZamanları zaman ON ad.ders_kodu = zaman.ders_kodu		
+	JOIN		
+	AçılanDersGünleri gün ON zaman.gün_id = gün.gün_id		
+	JOIN		
+	Ders ders ON ad.ders_kodu = ders.ders_kodu		
+	WHERE		
+	öğretmen.personel_id = 684;		
+dersin koduna göre, o dersin hangi gün ve saatlerde olduğunu öğren	SELECT		
+	ad.ders_kodu,		
+	gün.gün,		
+	zaman.saat		
+	FROM		
+	AçılanDers ad		
+	JOIN		
+	AçılanDersZamanları zaman ON ad.ders_kodu = zaman.ders_kodu		
+	JOIN		
+	AçılanDersGünleri gün ON zaman.gün_id = gün.gün_id		
+	WHERE		
+	ad.ders_kodu =1001;		
+dersin adı ile birlikte hangi stok türleri ve bu stoklardan kaçar adet bulunduğunu göster	SELECT		
+	ad.ders_kodu,		
+	ders.ders_adı AS ders_adi,		
+	stok.stok_türü,		
+	stok.miktar		
+	FROM		
+	AçılanDers ad		
+	JOIN		
+	Ders ders ON ad.ders_kodu = ders.ders_kodu		
+	JOIN		
+	Kullanır kullanır ON ad.ders_kodu = kullanır.ders_kodu		
+	JOIN		
+	Stok stok ON kullanır.stok_id = stok.stok_id;		
+stok miktarı 10000'den küçük olan stoklar için bir uyarı mesajı döndürecektir. Stok miktarı 10000 veya daha büyükse, uyari_mesaji alanı NULL olacaktır.	SELECT		
+	ad.ders_kodu,		
+	ders.ders_adı AS ders_adi,		
+	stok.stok_türü,		
+	stok.miktar,		
+	CASE		
+	WHEN stok.miktar < 60000 THEN 'Uyarı: Stok miktarı 10000\'den küçük!'		
+	ELSE NULL		
+	END AS uyari_mesaji		
+	FROM		
+	AçılanDers ad		
+	JOIN		
+	Ders ders ON ad.ders_kodu = ders.ders_kodu		
+	JOIN		
+	Kullanır kullanır ON ad.ders_kodu = kullanır.ders_kodu		
+	JOIN		
+	Stok stok ON kullanır.stok_id = stok.stok_id;		
