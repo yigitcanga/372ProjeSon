@@ -11424,8 +11424,6 @@ insert into AçılanDersGünleri values(53643,'Çarşamba');
 
 insert into AçılanDersGünleri values(56344,'Perşembe');
 
-insert into AçılanDersGünleri values(56344,'Perşembe');
-
 insert into AçılanDersGünleri values(56342,'Salı');
 
 insert into AçılanDersGünleri values(56345,'Cuma');
