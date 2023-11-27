@@ -82,7 +82,7 @@ dersin adı ile birlikte hangi stok türleri ve bu stoklardan kaçar adet bulund
 	Kullanır kullanır ON ad.ders_kodu = kullanır.ders_kodu		
 	JOIN		
 	Stok stok ON kullanır.stok_id = stok.stok_id;		
-stok miktarı 10000'den küçük olan stoklar için bir uyarı mesajı döndürecektir. Stok miktarı 10000 veya daha büyükse, uyari_mesaji alanı NULL olacaktır.	SELECT		
+stok miktarı 60000'den küçük olan stoklar için bir uyarı mesajı döndürecektir. Stok miktarı 60000 veya daha büyükse, uyari_mesaji alanı NULL olacaktır.	SELECT		
 	ad.ders_kodu,		
 	ders.ders_adı AS ders_adi,		
 	stok.stok_türü,		
