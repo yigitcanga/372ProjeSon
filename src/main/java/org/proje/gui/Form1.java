@@ -263,7 +263,7 @@ public class Form1 extends JFrame {
                         System.out.println(persCombo.getSelectedIndex());
                         switch (persCombo.getSelectedIndex()){
                             case 0:
-                                col="personel_no";
+                                col="personel_id";
                                 break;
                             case 1:
                                 col="ad";
@@ -484,7 +484,7 @@ public class Form1 extends JFrame {
                             System.out.println(giderCombo.getSelectedIndex());
                             switch (giderCombo.getSelectedIndex()){
                                 case 0:
-                                    col="gider_no";
+                                    col="gider_id";
                                     break;
                                 case 1:
                                     col="gider";

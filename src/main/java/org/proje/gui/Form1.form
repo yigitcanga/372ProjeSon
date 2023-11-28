@@ -143,18 +143,6 @@
         </constraints>
         <properties/>
       </component>
-      <component id="5cf9b" class="javax.swing.JButton" binding="button2" default-binding="true">
-        <constraints>
-          <grid row="7" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <minimum-size width="100" height="-1"/>
-            <preferred-size width="100" height="-1"/>
-            <maximum-size width="100" height="-1"/>
-          </grid>
-        </constraints>
-        <properties>
-          <text value="Seç"/>
-        </properties>
-      </component>
       <component id="4c508" class="javax.swing.JLabel" binding="dersLabel">
         <constraints>
           <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
@@ -174,18 +162,6 @@
           </grid>
         </constraints>
         <properties/>
-      </component>
-      <component id="736e3" class="javax.swing.JButton" binding="button3" default-binding="true">
-        <constraints>
-          <grid row="11" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <minimum-size width="100" height="-1"/>
-            <preferred-size width="100" height="-1"/>
-            <maximum-size width="100" height="-1"/>
-          </grid>
-        </constraints>
-        <properties>
-          <text value="Seç"/>
-        </properties>
       </component>
       <vspacer id="dbdc5">
         <constraints>
@@ -387,6 +363,30 @@
           </component>
         </children>
       </scrollpane>
+      <component id="aca96" class="javax.swing.JButton" binding="button2" default-binding="true">
+        <constraints>
+          <grid row="7" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="100" height="-1"/>
+            <preferred-size width="100" height="-1"/>
+            <maximum-size width="100" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Seç"/>
+        </properties>
+      </component>
+      <component id="925f6" class="javax.swing.JButton" binding="button3" default-binding="true">
+        <constraints>
+          <grid row="11" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="100" height="-1"/>
+            <preferred-size width="100" height="-1"/>
+            <maximum-size width="100" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Seç"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

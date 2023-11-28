@@ -22,7 +22,7 @@ public class PersonelDAO extends DAO{
         personel.setSoyad(resultSet.getString("soyad"));
         personel.setKurumId(resultSet.getString("kurum_id"));
         personel.setMaas(resultSet.getString("maaş"));
-        personel.setTcKimlik(resultSet.getString("tc_limlik"));
+        personel.setTcKimlik(resultSet.getString("tc_kimlik"));
         personel.setTelNo(resultSet.getString("tel_no"));
         return personel;
     }

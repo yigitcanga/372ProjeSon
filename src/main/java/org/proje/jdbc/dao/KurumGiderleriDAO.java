@@ -60,7 +60,7 @@ public class KurumGiderleriDAO extends DAO{
         try {
 
             statement = super.con.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM KurumGiderleri WHERE Gider." + attrb +" = "+value);
+            resultSet = statement.executeQuery("SELECT * FROM KurumGiderleri WHERE KurumGiderleri." + attrb +" = "+value);
             //resultSet = statement.executeQuery("SELECT * FROM öğrenci WHERE öğrenci.ad='Efe'");
 
             while (resultSet.next()){
