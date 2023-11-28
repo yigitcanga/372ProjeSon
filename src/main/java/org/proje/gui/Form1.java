@@ -3,13 +3,12 @@ package org.proje.gui;
 import org.proje.gui.tableModels.GiderTableModel;
 import org.proje.gui.tableModels.OgrenciTableModel;
 import org.proje.gui.tableModels.PersonelTableModel;
-import org.proje.jdbc.dao.DAO;
-import org.proje.jdbc.dao.KurumGiderleriDAO;
-import org.proje.jdbc.dao.OgrenciDAO;
-import org.proje.jdbc.dao.PersonelDAO;
+import org.proje.gui.tableModels.StokTableModel;
+import org.proje.jdbc.dao.*;
 import org.proje.jdbc.model.KurumGiderleri;
 import org.proje.jdbc.model.Ogrenci;
 import org.proje.jdbc.model.Personel;
+import org.proje.jdbc.model.Stok;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -526,13 +525,31 @@ public class Form1 extends JFrame {
                 //stokAttButton.setVisible(!stokAttButton.isVisible());
                 stokCombo.setVisible(!stokCombo.isVisible());
 
-                String selectedOption = stokCombo.getSelectedItem().toString();
-                String yeniBilgi = selectedOption + " giriniz.";
-                stokLabel.setText(yeniBilgi);
+                stokCombo.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String selectedOption = stokCombo.getSelectedItem().toString();
+                        String yeniBilgi = selectedOption + " giriniz.";
+                        stokLabel.setText(yeniBilgi);
+
+
+                    }
+                });
 
                 button5.setVisible(!button5.isVisible());
                 StokAtt.setVisible(!StokAtt.isVisible());
                 stokLabel.setVisible(!stokLabel.isVisible());
+
+                try {
+                    StokDAO sdao = new StokDAO();
+                    List<Stok> list = sdao.getAllStok();
+                    //Make a table for list
+                    StokTableModel model =new StokTableModel(list);
+                    table1.setModel(model);
+
+                }catch (Exception e1 ){
+                    JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+                }
 
                 button5.addActionListener(new ActionListener() {
                     @Override
@@ -540,6 +557,38 @@ public class Form1 extends JFrame {
                         String enteredText = StokAtt.getText();
                         String yeniBilgi = enteredText + " için veritabanı bilgisi burada!";
                         gelenBilgiLabel.setText(yeniBilgi);
+
+                        try {
+                            StokDAO sdao = new StokDAO();
+                            String col ="";
+                            System.out.println(stokCombo.getSelectedIndex());
+                            switch (stokCombo.getSelectedIndex()){
+                                case 0:
+                                    col="stok_id";
+                                    break;
+                                case 1:
+                                    col="stok_türü";
+                                    break;
+                                case 2:
+                                    col="miktar";
+                                    break;
+                                case 3:
+                                    col="kurum_id";
+                                    break;
+                                default:
+                                    col="stok_turu";
+                                    break;
+                            }
+                            System.out.println(col);
+                            System.out.println(enteredText);
+                            List<Stok> list = sdao.searchForStok(col,enteredText);
+                            //Make a table for list
+                            StokTableModel model =new StokTableModel(list);
+                            table1.setModel(model);
+
+                        }catch (Exception e1 ){
+                            JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 });
 
