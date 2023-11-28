@@ -1,5 +1,6 @@
 package org.proje.jdbc.dao;
 
+import org.proje.jdbc.model.Ogrenci;
 import org.proje.jdbc.model.Personel;
 
 import java.sql.ResultSet;
@@ -37,6 +38,35 @@ public class PersonelDAO extends DAO{
 
             statement = super.con.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM personel");
+
+            while (resultSet.next()){
+                Personel personel = rowToPersonel(resultSet);
+                list.add(personel);
+
+            }
+
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+
+        return  list;
+    }
+
+    public List<Personel> searchForPersonel(String attrb, String val) throws Exception {
+
+        List<Personel> list = new ArrayList<>();
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        String value="'";
+        value=value.concat(val).concat("'");
+
+        try {
+
+            statement = super.con.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM personel WHERE personel." + attrb +" = "+value);
+            //resultSet = statement.executeQuery("SELECT * FROM personel WHERE personel.ad='Efe'");
 
             while (resultSet.next()){
                 Personel personel = rowToPersonel(resultSet);

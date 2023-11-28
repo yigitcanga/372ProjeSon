@@ -1,6 +1,7 @@
 package org.proje.jdbc.dao;
 
 import org.proje.jdbc.model.KurumGiderleri;
+import org.proje.jdbc.model.Ogrenci;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -45,4 +46,34 @@ public class KurumGiderleriDAO extends DAO{
 
         return  list;
     }
+
+    public List<KurumGiderleri> searchForGider(String attrb, String val) throws Exception {
+
+        List<KurumGiderleri> list = new ArrayList<>();
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        String value="'";
+        value=value.concat(val).concat("'");
+
+        try {
+
+            statement = super.con.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM KurumGiderleri WHERE Gider." + attrb +" = "+value);
+            //resultSet = statement.executeQuery("SELECT * FROM öğrenci WHERE öğrenci.ad='Efe'");
+
+            while (resultSet.next()){
+                KurumGiderleri gider = rowToKurumGiderleri(resultSet);
+                list.add(gider);
+
+            }
+
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+
+        return  list;
+    }
+
 }

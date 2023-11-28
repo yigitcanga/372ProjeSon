@@ -1,9 +1,15 @@
 package org.proje.gui;
 
+import org.proje.gui.tableModels.GiderTableModel;
 import org.proje.gui.tableModels.OgrenciTableModel;
+import org.proje.gui.tableModels.PersonelTableModel;
 import org.proje.jdbc.dao.DAO;
+import org.proje.jdbc.dao.KurumGiderleriDAO;
 import org.proje.jdbc.dao.OgrenciDAO;
+import org.proje.jdbc.dao.PersonelDAO;
+import org.proje.jdbc.model.KurumGiderleri;
 import org.proje.jdbc.model.Ogrenci;
+import org.proje.jdbc.model.Personel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -199,13 +205,14 @@ public class Form1 extends JFrame {
         giderCombo.addItem("Gider Adı");
         giderCombo.addItem("Gider Tutarı");
         giderCombo.addItem("Gider Kurum Numarası");
+        giderCombo.addItem("Gider Tarihi");
 
         stokCombo.addItem("Stok Numarası");
         stokCombo.addItem("Stok Türü");
         stokCombo.addItem("Stok Miktarı");
         stokCombo.addItem("Stok Kurum Numarası");
 
-
+        //Umarım bitmiş personel sekmesi
         personelBilgisiButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -215,13 +222,31 @@ public class Form1 extends JFrame {
             //persAttButton.setVisible(!persAttButton.isVisible());
             persCombo.setVisible(!persCombo.isVisible());
 
-            String selectedOption = persCombo.getSelectedItem().toString();
-            String yeniBilgi = selectedOption + " giriniz.";
-            personelLabel.setText(yeniBilgi);
+            persCombo.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String selectedOption = persCombo.getSelectedItem().toString();
+                    String yeniBilgi = selectedOption + " giriniz.";
+                    personelLabel.setText(yeniBilgi);
+
+
+                }
+            });
 
             button1.setVisible(!button1.isVisible());
             PersonelAtt.setVisible(!PersonelAtt.isVisible());
             personelLabel.setVisible(!personelLabel.isVisible());
+
+            try {
+                PersonelDAO pdao = new PersonelDAO();
+                List<Personel> list =pdao.getAllPersonel();
+                //Make a table for list
+                PersonelTableModel model =new PersonelTableModel(list);
+                table1.setModel(model);
+
+            }catch (Exception e1 ){
+                JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+            }
 
             //call data for current selection on the drop down menu
 
@@ -231,6 +256,53 @@ public class Form1 extends JFrame {
                     String enteredText = PersonelAtt.getText();
                     String yeniBilgi = enteredText + " için veritabanı bilgisi burada!";
                     gelenBilgiLabel.setText(yeniBilgi);
+
+                    try {
+                        PersonelDAO pdao = new PersonelDAO();
+                        String col ="";
+                        System.out.println(persCombo.getSelectedIndex());
+                        switch (persCombo.getSelectedIndex()){
+                            case 0:
+                                col="personel_no";
+                                break;
+                            case 1:
+                                col="ad";
+                                break;
+                            case 2:
+                                col="soyad";
+                                break;
+                            case 3:
+                                col = "tc_kimlik";
+                                break;
+                            case 4:
+                                col="tel_no";
+                                break;
+                            case 5:
+                                col="mail";
+                                break;
+                            case 6:
+                                col="adres";
+                                break;
+                            case 7:
+                                col="maaş";
+                                break;
+                            case 8:
+                                col="kurum_id";
+                                break;
+                            default:
+                                col="ad";
+                                break;
+                        }
+                        System.out.println(col);
+                        System.out.println(enteredText);
+                        List<Personel> list = pdao.searchForPersonel(col,enteredText);
+                        //Make a table for list
+                        PersonelTableModel model =new PersonelTableModel(list);
+                        table1.setModel(model);
+
+                    }catch (Exception e1 ){
+                        JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             });
 
@@ -372,13 +444,32 @@ public class Form1 extends JFrame {
                 //giderAttButton.setVisible(!giderAttButton.isVisible());
                 giderCombo.setVisible(!giderCombo.isVisible());
 
-                String selectedOption = giderCombo.getSelectedItem().toString();
-                String yeniBilgi = selectedOption + " giriniz.";
-                giderLabel.setText(yeniBilgi);
+                giderCombo.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String selectedOption = giderCombo.getSelectedItem().toString();
+                        String yeniBilgi = selectedOption + " giriniz.";
+                        giderLabel.setText(yeniBilgi);
+
+
+                    }
+                });
 
                 button4.setVisible(!button4.isVisible());
                 GiderAtt.setVisible(!GiderAtt.isVisible());
                 giderLabel.setVisible(!giderLabel.isVisible());
+
+
+                try {
+                    KurumGiderleriDAO kdao = new KurumGiderleriDAO();
+                    List<KurumGiderleri> list = kdao.getAllKurumGiderleri();
+                    //Make a table for list
+                    GiderTableModel model =new GiderTableModel(list);
+                    table1.setModel(model);
+
+                }catch (Exception e1 ){
+                    JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+                }
 
                 button4.addActionListener(new ActionListener() {
                     @Override
@@ -386,6 +477,41 @@ public class Form1 extends JFrame {
                         String enteredText = GiderAtt.getText();
                         String yeniBilgi = enteredText + " için veritabanı bilgisi burada!";
                         gelenBilgiLabel.setText(yeniBilgi);
+
+                        try {
+                            KurumGiderleriDAO kdao = new KurumGiderleriDAO();
+                            String col ="";
+                            System.out.println(giderCombo.getSelectedIndex());
+                            switch (giderCombo.getSelectedIndex()){
+                                case 0:
+                                    col="gider_no";
+                                    break;
+                                case 1:
+                                    col="gider";
+                                    break;
+                                case 2:
+                                    col="tutar";
+                                    break;
+                                case 3:
+                                    col="kurum_id";
+                                    break;
+                                case 9:
+                                    col="tarih";
+                                    break;
+                                default:
+                                    col="gider";
+                                    break;
+                            }
+                            System.out.println(col);
+                            System.out.println(enteredText);
+                            List<KurumGiderleri> list = kdao.searchForGider(col,enteredText);
+                            //Make a table for list
+                            GiderTableModel model =new GiderTableModel(list);
+                            table1.setModel(model);
+
+                        }catch (Exception e1 ){
+                            JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 });
 
