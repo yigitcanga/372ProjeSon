@@ -4,6 +4,7 @@ import org.proje.jdbc.model.Ders;
 import org.proje.jdbc.model.DersKoduTumBilgiler;
 import org.proje.jdbc.model.Ogrenci;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -30,6 +31,24 @@ public class DersDAO extends DAO{
         ders.setSaat(resultSet.getString("saat"));
         ders.setGun(resultSet.getString("gün"));
         return ders;
+    }
+
+    public void addDers(Ders theDers) throws Exception{
+
+        PreparedStatement statement = null;
+
+        try {
+            statement = super.con.prepareStatement("insert into ders" + " (ders_kodu, ders_adı)" + " values (?, ?)");
+
+            statement.setString(1, theDers.getDersKodu());
+            statement.setString(2, theDers.getDersAdi());
+
+            statement.executeUpdate();
+        }
+        catch (Exception e){
+            throw new Exception(e);
+        }
+
     }
 
     public List<Ders> getAllDers() throws Exception {
