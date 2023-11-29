@@ -5,13 +5,15 @@ public class KurumGiderleri {
     String  giderId,
             gider,
             tutar,
-            kurumId;
+            kurumId,
+            tarih;
 
-    public KurumGiderleri(String giderId, String gider, String tutar, String kurumId) {
+    public KurumGiderleri(String giderId, String gider, String tutar, String kurumId,String tarih) {
         this.giderId = giderId;
         this.gider = gider;
         this.tutar = tutar;
         this.kurumId = kurumId;
+        this.tarih = tarih;
     }
 
     public KurumGiderleri() {
@@ -49,6 +51,14 @@ public class KurumGiderleri {
         this.kurumId = kurumId;
     }
 
+    public String getTarih() {
+        return tarih;
+    }
+
+    public void setTarih(String tarih) {
+        this.tarih = tarih;
+    }
+
     @Override
     public String toString() {
         return "KurumGiderleri{" +
@@ -56,6 +66,7 @@ public class KurumGiderleri {
                 ", gider='" + gider + '\'' +
                 ", tutar='" + tutar + '\'' +
                 ", kurumId='" + kurumId + '\'' +
+                ", tarih='" + tarih + '\'' +
                 '}';
     }
 }

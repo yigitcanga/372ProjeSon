@@ -19,6 +19,7 @@ public class KurumGiderleriDAO extends DAO{
         kurumGiderleri.setGider(resultSet.getString("gider"));
         kurumGiderleri.setTutar(resultSet.getString("tutar"));
         kurumGiderleri.setGiderId(resultSet.getString("gider_id"));
+        kurumGiderleri.setTarih(resultSet.getString("tarih"));
         return kurumGiderleri;
     }
 

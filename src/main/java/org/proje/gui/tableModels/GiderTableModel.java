@@ -10,7 +10,7 @@ public class GiderTableModel extends AbstractTableModel {
     private static final int GIDER=1;
     private static final int TUTAR=2;
     private static final int KURUM=3;
-    //private static final int TARIH=4;
+    private static final int TARIH=4;
 
     private String[] col_names = {"Gider Numarası","Gider Adı","Gider Tutarı","Kurum Adı", "Gider Tarihi"};
     private List<KurumGiderleri> giderler;
@@ -41,8 +41,8 @@ public class GiderTableModel extends AbstractTableModel {
                 return gider.getTutar();
             case KURUM://direk kurum adını getirmek lazım!!
                 return gider.getKurumId();
-            //case TARIH:
-                //return gider.getTarih();
+            case TARIH:
+                return gider.getTarih();
         }
         return null;
     }
