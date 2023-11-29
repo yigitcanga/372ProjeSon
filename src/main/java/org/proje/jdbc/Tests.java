@@ -4,10 +4,7 @@ import org.proje.jdbc.dao.AcilanDersDAO;
 import org.proje.jdbc.dao.DersDAO;
 import org.proje.jdbc.dao.OgrenciDAO;
 import org.proje.jdbc.dao.StokDAO;
-import org.proje.jdbc.model.AcilanDers;
-import org.proje.jdbc.model.Ders;
-import org.proje.jdbc.model.DersStok;
-import org.proje.jdbc.model.Ogrenci;
+import org.proje.jdbc.model.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,8 +15,8 @@ public class Tests {
 
         try {
             StokDAO sdao = new StokDAO();
-            List<DersStok> list11 =sdao.searchForDersStok("1001");
-            for (DersStok ders : list11) {
+            List<StokWithErr> list11 =sdao.getAllStokWithErr();
+            for (StokWithErr ders : list11) {
                 System.out.println(ders);
             }
             /*OgrenciDAO odao = new OgrenciDAO();

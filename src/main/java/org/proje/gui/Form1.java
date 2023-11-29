@@ -208,6 +208,7 @@ public class Form1 extends JFrame {
         giderCombo.addItem("Gider Kurum Numarası");
         giderCombo.addItem("Gider Tarihi");
 
+        stokCombo.addItem("Stok");
         stokCombo.addItem("Stok Numarası");
         stokCombo.addItem("Stok Türü");
         stokCombo.addItem("Stok Miktarı");
@@ -621,7 +622,7 @@ public class Form1 extends JFrame {
                         stokLabel.setText(yeniBilgi);
                         try {
                             switch (stokCombo.getSelectedIndex()) {
-                                case 4:
+                                case 5:
                                     StokDAO sdao = new StokDAO();
                                     List<DersStok> list = sdao.getAllDersStok();
                                     DersStokTableModel model = new DersStokTableModel(list);
@@ -642,9 +643,9 @@ public class Form1 extends JFrame {
 
                 try {
                     StokDAO sdao = new StokDAO();
-                    List<Stok> list = sdao.getAllStok();
+                    List<StokWithErr> list = sdao.getAllStokWithErr();
                     //Make a table for list
-                    StokTableModel model = new StokTableModel(list);
+                    StokWithErrTableModel model = new StokWithErrTableModel(list);
                     table1.setModel(model);
 
                 } catch (Exception e1) {
@@ -660,6 +661,7 @@ public class Form1 extends JFrame {
 
                         List<Stok> list = null;
                         List<DersStok> list1 = null;
+                        List<StokWithErr> list2 = null;
 
                         try {
                             StokDAO sdao = new StokDAO();
@@ -667,22 +669,25 @@ public class Form1 extends JFrame {
                             System.out.println(stokCombo.getSelectedIndex());
                             switch (stokCombo.getSelectedIndex()) {
                                 case 0:
+                                    list2 = sdao.getAllStokWithErr();
+                                    break;
+                                case 1:
                                     col = "stok_id";
                                     list = sdao.searchForStok(col, enteredText);
                                     break;
-                                case 1:
+                                case 2:
                                     col = "stok_türü";
                                     list = sdao.searchForStok(col, enteredText);
                                     break;
-                                case 2:
+                                case 3:
                                     col = "miktar";
                                     list = sdao.searchForStok(col, enteredText);
                                     break;
-                                case 3:
+                                case 4:
                                     col = "kurum_id";
                                     list = sdao.searchForStok(col, enteredText);
                                     break;
-                                case 4:
+                                case 5:
                                     list1 = sdao.searchForDersStok(enteredText);
                                     break;
                                 default:
@@ -694,7 +699,10 @@ public class Form1 extends JFrame {
                             //System.out.println(enteredText);
                             //List<Stok> list = sdao.searchForStok(col, enteredText);
                             //Make a table for list
-                            if (list != null) {
+                            if (list2 != null) {
+                                StokWithErrTableModel model = new StokWithErrTableModel(list2);
+                                table1.setModel(model);
+                            } else if (list != null) {
                                 StokTableModel model = new StokTableModel(list);
                                 table1.setModel(model);
                             } else if (list1 != null) {
