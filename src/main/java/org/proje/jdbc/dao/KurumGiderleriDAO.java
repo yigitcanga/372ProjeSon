@@ -106,18 +106,11 @@ public class KurumGiderleriDAO extends DAO{
                     "  SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL\n" +
                     "  SELECT 10 UNION ALL SELECT 11\n" +
                     "  ) AS numbers \n" +
-                    "    DATE_FORMAT(MAX(month_start), '%Y-%m-01') AS month_start\n" +
-                    "  FROM (\n" +
-                    "    SELECT \n" +
-                    "      DATE_FORMAT(tarih, '%Y-%m-01') AS month_start\n" +
-                    "    FROM KurumGiderleri\n" +
-                    "    WHERE gider_id = 5003\n" +
-                    "    GROUP BY month_start\n" +
-                    "  ) months\n" +
-                    ") DateSequence\n" +
-                    "LEFT JOIN KurumGiderleri ON DateSequence.month_start = DATE_FORMAT(KurumGiderleri.tarih, '%Y-%m-01')\n" +
-                    "GROUP BY month_start\n" +
-                    "ORDER BY month_start;");
+                    "  ) AS all_months\n" +
+                    "  LEFT JOIN KurumGiderleri kg ON all_months.month_start = DATE_FORMAT(kg.tarih, '%Y-%m-01')\n" +
+                    "  GROUP BY all_months.month_start \n" +
+                    "  ORDER BY all_months.month_start;\n");
+
 
             while (resultSet.next()){
                 AylikGider kurumGiderleri = rowToAylikGider(resultSet);
@@ -143,20 +136,18 @@ public class KurumGiderleriDAO extends DAO{
 
             statement = super.con.createStatement();
             resultSet = statement.executeQuery("SELECT \n" +
-                    "  week_start,\n" +
-                    "  week_end,\n" +
-                    "  COALESCE(SUM(tutar), 0) AS total_tutar\n" +
+                    "  all_weeks.week_start,\n" +
+                    "  all_weeks.week_end,\n" +
+                    "  COALESCE(SUM(kg.tutar), 0) AS total_tutar\n" +
                     "FROM (\n" +
                     "  SELECT \n" +
                     "    start_of_week AS week_start,\n" +
                     "    DATE_ADD(start_of_week, INTERVAL 6 DAY) AS week_end\n" +
                     "  FROM (\n" +
                     "    SELECT \n" +
-                    "      MIN(tarih) AS start_of_week,\n" +
-                    "      FLOOR(DATEDIFF(tarih, (SELECT MIN(tarih) FROM KurumGiderleri WHERE gider_id = 5003)) / 7) AS week_number\n" +
+                    "      MIN(tarih) AS start_of_week\n" +
                     "    FROM KurumGiderleri\n" +
-                    "    WHERE gider_id = 5003\n" +
-                    "    GROUP BY week_number\n" +
+                    "    GROUP BY YEAR(tarih), MONTH(tarih), FLOOR(DAY(tarih) / 7)\n" +
                     "  ) Weeks\n" +
                     "  UNION ALL\n" +
                     "  SELECT \n" +
@@ -164,16 +155,15 @@ public class KurumGiderleriDAO extends DAO{
                     "    DATE_ADD(MAX(DATE_ADD(week_start, INTERVAL 6 DAY)), INTERVAL 7 DAY) AS week_end\n" +
                     "  FROM (\n" +
                     "    SELECT \n" +
-                    "      MIN(tarih) AS week_start,\n" +
-                    "      FLOOR(DATEDIFF(tarih, (SELECT MIN(tarih) FROM KurumGiderleri WHERE gider_id = 5003)) / 7) AS week_number\n" +
+                    "      MIN(tarih) AS week_start\n" +
                     "    FROM KurumGiderleri\n" +
-                    "    WHERE gider_id = 5003\n" +
-                    "    GROUP BY week_number\n" +
+                    "    GROUP BY YEAR(tarih), MONTH(tarih), FLOOR(DAY(tarih) / 7)\n" +
                     "  ) Weeks\n" +
-                    ") DateSequence\n" +
-                    "LEFT JOIN KurumGiderleri ON DateSequence.week_start <= KurumGiderleri.tarih AND KurumGiderleri.tarih <= DateSequence.week_end\n" +
-                    "GROUP BY week_start, week_end \n" +
-                    "ORDER BY week_start;");
+                    ") all_weeks\n" +
+                    "LEFT JOIN KurumGiderleri kg ON all_weeks.week_start <= kg.tarih AND kg.tarih <= all_weeks.week_end\n" +
+                    "GROUP BY all_weeks.week_start, all_weeks.week_end \n" +
+                    "ORDER BY all_weeks.week_start;");
+
 
             while (resultSet.next()){
                 HaftalikGider kurumGiderleri = rowToHaftalikGider(resultSet);

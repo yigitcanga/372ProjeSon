@@ -188,6 +188,7 @@ public class Form1 extends JFrame {
         persCombo.addItem("Personel Maaşı");
         persCombo.addItem("Personel Kurum Numarası");
         persCombo.addItem("Müsait Zaman Part Time Personel Id");
+        persCombo.addItem("Personel Türü Personel Id");
 
         stuCombo.addItem("Öğrenci Numarası");
         stuCombo.addItem("Öğrenci Adı");
@@ -277,6 +278,7 @@ public class Form1 extends JFrame {
                             System.out.println(persCombo.getSelectedIndex());
                             List<Personel> list = null;
                             List<GunSaat> list1 = null;
+                            List<PTurCalisan> list2 = null;
                             switch (persCombo.getSelectedIndex()) {
                                 case 0:
                                     col = "personel_id";
@@ -317,6 +319,9 @@ public class Form1 extends JFrame {
                                 case 9:
                                     list1 = pdao.getAllGS(enteredText);
                                     break;
+                                case 10:
+                                    list2 = pdao.getPTC(enteredText);
+                                    break;
                                 default:
                                     col = "ad";
                                     list = pdao.searchForPersonel(col, enteredText);
@@ -327,6 +332,10 @@ public class Form1 extends JFrame {
                                 table1.setModel(model);
                             } else if (list1 != null) {
                                 MusaitTM model = new MusaitTM(list1);
+                                table1.setModel(model);
+                            }
+                            else if (list2 != null) {
+                                PTCTM model = new PTCTM(list2);
                                 table1.setModel(model);
                             }
 
