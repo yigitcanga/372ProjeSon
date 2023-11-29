@@ -207,6 +207,8 @@ public class Form1 extends JFrame {
         giderCombo.addItem("Gider Tutarı");
         giderCombo.addItem("Gider Kurum Numarası");
         giderCombo.addItem("Gider Tarihi");
+        giderCombo.addItem("Haftalık Gider Dökümü");
+        giderCombo.addItem("Aylık Gider Dökümü");
 
         stokCombo.addItem("Stok");
         stokCombo.addItem("Stok Numarası");
@@ -566,6 +568,10 @@ public class Form1 extends JFrame {
                         String yeniBilgi = enteredText + " için veritabanı bilgisi burada!";
                         gelenBilgiLabel.setText(yeniBilgi);
 
+                        List<KurumGiderleri> list = null;
+                        List<AylikGider> list1 = null;
+                        List<HaftalikGider> list2 = null;
+
                         try {
                             KurumGiderleriDAO kdao = new KurumGiderleriDAO();
                             String col = "";
@@ -573,18 +579,29 @@ public class Form1 extends JFrame {
                             switch (giderCombo.getSelectedIndex()) {
                                 case 0:
                                     col = "gider_id";
+                                    list = kdao.searchForGider(col, enteredText);
                                     break;
                                 case 1:
                                     col = "gider";
+                                    list = kdao.searchForGider(col, enteredText);
                                     break;
                                 case 2:
                                     col = "tutar";
+                                    list = kdao.searchForGider(col, enteredText);
                                     break;
                                 case 3:
                                     col = "kurum_id";
+                                    list = kdao.searchForGider(col, enteredText);
                                     break;
-                                case 9:
+                                case 4:
                                     col = "tarih";
+                                    list = kdao.searchForGider(col, enteredText);
+                                    break;
+                                case 5://haftalik gider dokumu
+                                    list2 = kdao.getHaftalikDokum();
+                                    break;
+                                case 6://aylik gider dokumu
+                                    list1 = kdao.getAylikDokum();
                                     break;
                                 default:
                                     col = "gider";
@@ -592,10 +609,20 @@ public class Form1 extends JFrame {
                             }
                             System.out.println(col);
                             System.out.println(enteredText);
-                            List<KurumGiderleri> list = kdao.searchForGider(col, enteredText);
+                            if (list != null) {
+
+                                GiderTableModel model = new GiderTableModel(list);
+                                table1.setModel(model);
+                            } else if (list1 != null) {
+                                AylikDokumTableModel model = new AylikDokumTableModel(list1);
+                                table1.setModel(model);
+                            } else if (list2 != null) {
+                                HaftalikDokumTableModel model = new HaftalikDokumTableModel(list2);
+                                table1.setModel(model);
+                            }
+
                             //Make a table for list
-                            GiderTableModel model = new GiderTableModel(list);
-                            table1.setModel(model);
+
 
                         } catch (Exception e1) {
                             JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
