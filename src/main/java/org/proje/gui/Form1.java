@@ -870,7 +870,6 @@ public class Form1 extends JFrame {
         gbc.gridwidth = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(button4, gbc);
         stokLabel = new JLabel();
         stokLabel.setText("Stok Numarasını Giriniz:");
@@ -898,7 +897,6 @@ public class Form1 extends JFrame {
         gbc.gridwidth = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(button5, gbc);
         giderBilgisiButton = new JButton();
         giderBilgisiButton.setText("Gider Bilgisi");
@@ -935,7 +933,7 @@ public class Form1 extends JFrame {
         gbc.gridy = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(PersonelAtt, gbc);
         button1 = new JButton();
         button1.setText("Seç");
@@ -945,7 +943,6 @@ public class Form1 extends JFrame {
         gbc.gridwidth = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(button1, gbc);
         personelBilgisiButton = new JButton();
         personelBilgisiButton.setHideActionText(false);
@@ -977,7 +974,6 @@ public class Form1 extends JFrame {
         gbc.gridwidth = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(button2, gbc);
         button3 = new JButton();
         button3.setText("Seç");
@@ -987,7 +983,6 @@ public class Form1 extends JFrame {
         gbc.gridwidth = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(button3, gbc);
     }
 
@@ -997,4 +992,5 @@ public class Form1 extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return panel1;
     }
+
 }
