@@ -5,6 +5,7 @@ import org.proje.jdbc.dao.*;
 import org.proje.jdbc.model.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -49,33 +50,33 @@ public class Form1 extends JFrame {
     private JTextField StokAtt;
     private JTable table1;
 
-    public void closeAllBut(int i){
-        switch (i){
-            case 1 :
+    public void closeAllBut(int i) {
+        switch (i) {
+            case 1:
                 kapatStokBilgisi();
                 kapatDersBilgisi();
                 kapatGiderBilgisi();
                 kapatStudentBilgisi();
                 break;
-            case 2 :
+            case 2:
                 kapatPersonelBilgisi();
                 kapatStokBilgisi();
                 kapatGiderBilgisi();
                 kapatDersBilgisi();
                 break;
-            case 3 :
+            case 3:
                 kapatPersonelBilgisi();
                 kapatStudentBilgisi();
                 kapatGiderBilgisi();
                 kapatStokBilgisi();
                 break;
-            case 4 :
+            case 4:
                 kapatPersonelBilgisi();
                 kapatStudentBilgisi();
                 kapatDersBilgisi();
                 kapatStokBilgisi();
                 break;
-            case 5 :
+            case 5:
                 kapatPersonelBilgisi();
                 kapatStudentBilgisi();
                 kapatDersBilgisi();
@@ -86,14 +87,15 @@ public class Form1 extends JFrame {
         }
     }
 
-    public void kapatPersonelBilgisi(){
+    public void kapatPersonelBilgisi() {
         persAtt.setVisible(false);
         persCombo.setVisible(false);
         PersonelAtt.setVisible(false);
         button1.setVisible(false);
         personelLabel.setVisible(false);
     }
-    public void kapatDersBilgisi(){
+
+    public void kapatDersBilgisi() {
         dersAtt.setVisible(false);
         dersCombo.setVisible(false);
         DersAtt.setVisible(false);
@@ -101,21 +103,23 @@ public class Form1 extends JFrame {
         dersLabel.setVisible(false);
     }
 
-    public void kapatStudentBilgisi(){
+    public void kapatStudentBilgisi() {
         stuAtt.setVisible(false);
         stuCombo.setVisible(false);
         StudentAtt.setVisible(false);
         button3.setVisible(false);
         studentLabel.setVisible(false);
     }
-    public void kapatGiderBilgisi(){
+
+    public void kapatGiderBilgisi() {
         giderAtt.setVisible(false);
         giderCombo.setVisible(false);
         GiderAtt.setVisible(false);
         button4.setVisible(false);
         giderLabel.setVisible(false);
     }
-    public void kapatStokBilgisi(){
+
+    public void kapatStokBilgisi() {
         stokAtt.setVisible(false);
         stokCombo.setVisible(false);
         StokAtt.setVisible(false);
@@ -125,17 +129,18 @@ public class Form1 extends JFrame {
 
     public Form1() {
 
-        try{
+        $$$setupUI$$$();
+        try {
             DAO dao = new DAO();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
-            JOptionPane.showMessageDialog(this,"Error:"+e,"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error:" + e, "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         add(panel1);
         this.setTitle("Bilgi Uygulaması");
         //this.setSize(400, 300);
-        this.setBounds(200,100,1200,800);
+        this.setBounds(200, 100, 1200, 800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         button1.setVisible(false);
@@ -209,97 +214,97 @@ public class Form1 extends JFrame {
 
         //Umarım bitmiş personel sekmesi
         personelBilgisiButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            closeAllBut(1);
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                closeAllBut(1);
 
-            persAtt.setVisible(!persAtt.isVisible());
-            //persAttButton.setVisible(!persAttButton.isVisible());
-            persCombo.setVisible(!persCombo.isVisible());
+                persAtt.setVisible(!persAtt.isVisible());
+                //persAttButton.setVisible(!persAttButton.isVisible());
+                persCombo.setVisible(!persCombo.isVisible());
 
-            persCombo.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String selectedOption = persCombo.getSelectedItem().toString();
-                    String yeniBilgi = selectedOption + " giriniz.";
-                    personelLabel.setText(yeniBilgi);
+                persCombo.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String selectedOption = persCombo.getSelectedItem().toString();
+                        String yeniBilgi = selectedOption + " giriniz.";
+                        personelLabel.setText(yeniBilgi);
 
 
-                }
-            });
-
-            button1.setVisible(!button1.isVisible());
-            PersonelAtt.setVisible(!PersonelAtt.isVisible());
-            personelLabel.setVisible(!personelLabel.isVisible());
-
-            try {
-                PersonelDAO pdao = new PersonelDAO();
-                List<Personel> list =pdao.getAllPersonel();
-                //Make a table for list
-                PersonelTableModel model =new PersonelTableModel(list);
-                table1.setModel(model);
-
-            }catch (Exception e1 ){
-                JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
-            }
-
-            //call data for current selection on the drop down menu
-
-            button1.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String enteredText = PersonelAtt.getText();
-                    String yeniBilgi = enteredText + " için veritabanı bilgisi burada!";
-                    gelenBilgiLabel.setText(yeniBilgi);
-
-                    try {
-                        PersonelDAO pdao = new PersonelDAO();
-                        String col ="";
-                        System.out.println(persCombo.getSelectedIndex());
-                        switch (persCombo.getSelectedIndex()){
-                            case 0:
-                                col="personel_id";
-                                break;
-                            case 1:
-                                col="ad";
-                                break;
-                            case 2:
-                                col="soyad";
-                                break;
-                            case 3:
-                                col = "tc_kimlik";
-                                break;
-                            case 4:
-                                col="tel_no";
-                                break;
-                            case 5:
-                                col="mail";
-                                break;
-                            case 6:
-                                col="adres";
-                                break;
-                            case 7:
-                                col="maaş";
-                                break;
-                            case 8:
-                                col="kurum_id";
-                                break;
-                            default:
-                                col="ad";
-                                break;
-                        }
-                        System.out.println(col);
-                        System.out.println(enteredText);
-                        List<Personel> list = pdao.searchForPersonel(col,enteredText);
-                        //Make a table for list
-                        PersonelTableModel model =new PersonelTableModel(list);
-                        table1.setModel(model);
-
-                    }catch (Exception e1 ){
-                        JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
                     }
+                });
+
+                button1.setVisible(!button1.isVisible());
+                PersonelAtt.setVisible(!PersonelAtt.isVisible());
+                personelLabel.setVisible(!personelLabel.isVisible());
+
+                try {
+                    PersonelDAO pdao = new PersonelDAO();
+                    List<Personel> list = pdao.getAllPersonel();
+                    //Make a table for list
+                    PersonelTableModel model = new PersonelTableModel(list);
+                    table1.setModel(model);
+
+                } catch (Exception e1) {
+                    JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            });
+
+                //call data for current selection on the drop down menu
+
+                button1.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String enteredText = PersonelAtt.getText();
+                        String yeniBilgi = enteredText + " için veritabanı bilgisi burada!";
+                        gelenBilgiLabel.setText(yeniBilgi);
+
+                        try {
+                            PersonelDAO pdao = new PersonelDAO();
+                            String col = "";
+                            System.out.println(persCombo.getSelectedIndex());
+                            switch (persCombo.getSelectedIndex()) {
+                                case 0:
+                                    col = "personel_id";
+                                    break;
+                                case 1:
+                                    col = "ad";
+                                    break;
+                                case 2:
+                                    col = "soyad";
+                                    break;
+                                case 3:
+                                    col = "tc_kimlik";
+                                    break;
+                                case 4:
+                                    col = "tel_no";
+                                    break;
+                                case 5:
+                                    col = "mail";
+                                    break;
+                                case 6:
+                                    col = "adres";
+                                    break;
+                                case 7:
+                                    col = "maaş";
+                                    break;
+                                case 8:
+                                    col = "kurum_id";
+                                    break;
+                                default:
+                                    col = "ad";
+                                    break;
+                            }
+                            System.out.println(col);
+                            System.out.println(enteredText);
+                            List<Personel> list = pdao.searchForPersonel(col, enteredText);
+                            //Make a table for list
+                            PersonelTableModel model = new PersonelTableModel(list);
+                            table1.setModel(model);
+
+                        } catch (Exception e1) {
+                            JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                });
 
             }
         });
@@ -329,13 +334,13 @@ public class Form1 extends JFrame {
 
                 try {
                     OgrenciDAO odao = new OgrenciDAO();
-                    List<Ogrenci> list =odao.getAllOgrenci();
+                    List<Ogrenci> list = odao.getAllOgrenci();
                     //Make a table for list
-                    OgrenciTableModel model =new OgrenciTableModel(list);
+                    OgrenciTableModel model = new OgrenciTableModel(list);
                     table1.setModel(model);
 
-                }catch (Exception e1 ){
-                    JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+                } catch (Exception e1) {
+                    JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
                 button2.addActionListener(new ActionListener() {
@@ -347,55 +352,55 @@ public class Form1 extends JFrame {
 
                         try {
                             OgrenciDAO odao = new OgrenciDAO();
-                            String col ="";
+                            String col = "";
                             System.out.println(stuCombo.getSelectedIndex());
-                            switch (stuCombo.getSelectedIndex()){
+                            switch (stuCombo.getSelectedIndex()) {
                                 case 0:
-                                    col="okul_no";
+                                    col = "okul_no";
                                     break;
                                 case 1:
-                                    col="ad";
+                                    col = "ad";
                                     break;
                                 case 2:
-                                    col="soyad";
+                                    col = "soyad";
                                     break;
                                 case 3:
-                                    col="doğum_tarihi";
+                                    col = "doğum_tarihi";
                                     break;
                                 case 4:
-                                    col="mail";
+                                    col = "mail";
                                     break;
                                 case 5:
-                                    col="tel_no";
+                                    col = "tel_no";
                                     break;
                                 case 6:
-                                    col="sınıf";
+                                    col = "sınıf";
                                     break;
                                 case 7:
-                                    col="adres";
+                                    col = "adres";
                                     break;
                                 case 8:
-                                    col="mezun_mu";
+                                    col = "mezun_mu";
                                     break;
                                 case 9:
-                                    col="kurum_id";
+                                    col = "kurum_id";
                                     break;
                                 case 10:
                                     col = "tc_kimlik";
                                     break;
                                 default:
-                                    col="ad";
+                                    col = "ad";
                                     break;
                             }
                             System.out.println(col);
                             System.out.println(enteredText);
-                            List<Ogrenci> list = odao.searchForOgrenci(col,enteredText);
+                            List<Ogrenci> list = odao.searchForOgrenci(col, enteredText);
                             //Make a table for list
-                            OgrenciTableModel model =new OgrenciTableModel(list);
+                            OgrenciTableModel model = new OgrenciTableModel(list);
                             table1.setModel(model);
 
-                        }catch (Exception e1 ){
-                            JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+                        } catch (Exception e1) {
+                            JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
                         }
 
                     }
@@ -434,11 +439,11 @@ public class Form1 extends JFrame {
                     DersDAO ddao = new DersDAO();
                     List<Ders> liste = ddao.getAllDers();
                     //Make a table for list
-                    DersTableModel model =new DersTableModel(liste);
+                    DersTableModel model = new DersTableModel(liste);
                     table1.setModel(model);
 
-                }catch (Exception e1 ){
-                    JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+                } catch (Exception e1) {
+                    JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
                 button3.addActionListener(new ActionListener() {
@@ -452,19 +457,19 @@ public class Form1 extends JFrame {
                             DersDAO ddao = new DersDAO();
                             OgretmenDAO ogretmenDAO = new OgretmenDAO();
                             OgrenciDAO ogrenciDAO = new OgrenciDAO();
-                            String col ="";
+                            String col = "";
                             //System.out.println(dersCombo.getSelectedIndex());
 
                             List<Ders> list = null;
                             List<Dersler> dersler = null;
-                            switch (dersCombo.getSelectedIndex()){
+                            switch (dersCombo.getSelectedIndex()) {
                                 case 0:
-                                    col="ders_kodu";
-                                    list = ddao.searchForDers(col,enteredText);
+                                    col = "ders_kodu";
+                                    list = ddao.searchForDers(col, enteredText);
                                     break;
                                 case 1:
-                                    col="ders_adı";
-                                    list = ddao.searchForDers(col,enteredText);
+                                    col = "ders_adı";
+                                    list = ddao.searchForDers(col, enteredText);
                                     break;
                                 case 2:
                                     col = "okul_no";
@@ -475,7 +480,7 @@ public class Form1 extends JFrame {
                                     dersler = ogretmenDAO.getDersler(enteredText);
                                     break;
                                 default:
-                                    col="ders_kodu";
+                                    col = "ders_kodu";
                                     break;
                             }
                             //System.out.println(col);
@@ -483,16 +488,16 @@ public class Form1 extends JFrame {
                             //List<Ders> list = ddao.searchForDers(col,enteredText);
                             //Make a table for list
 
-                            if(list!=null){
-                                DersTableModel model =new DersTableModel(list);
+                            if (list != null) {
+                                DersTableModel model = new DersTableModel(list);
                                 table1.setModel(model);
-                            } else if (dersler!=null) {
-                                OgrDersTableModel model1 =new OgrDersTableModel(dersler);
+                            } else if (dersler != null) {
+                                OgrDersTableModel model1 = new OgrDersTableModel(dersler);
                                 table1.setModel(model1);
                             }
 
-                        }catch (Exception e1 ){
-                            JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+                        } catch (Exception e1) {
+                            JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 });
@@ -528,11 +533,11 @@ public class Form1 extends JFrame {
                     KurumGiderleriDAO kdao = new KurumGiderleriDAO();
                     List<KurumGiderleri> list = kdao.getAllKurumGiderleri();
                     //Make a table for list
-                    GiderTableModel model =new GiderTableModel(list);
+                    GiderTableModel model = new GiderTableModel(list);
                     table1.setModel(model);
 
-                }catch (Exception e1 ){
-                    JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+                } catch (Exception e1) {
+                    JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
                 button4.addActionListener(new ActionListener() {
@@ -544,37 +549,37 @@ public class Form1 extends JFrame {
 
                         try {
                             KurumGiderleriDAO kdao = new KurumGiderleriDAO();
-                            String col ="";
+                            String col = "";
                             System.out.println(giderCombo.getSelectedIndex());
-                            switch (giderCombo.getSelectedIndex()){
+                            switch (giderCombo.getSelectedIndex()) {
                                 case 0:
-                                    col="gider_id";
+                                    col = "gider_id";
                                     break;
                                 case 1:
-                                    col="gider";
+                                    col = "gider";
                                     break;
                                 case 2:
-                                    col="tutar";
+                                    col = "tutar";
                                     break;
                                 case 3:
-                                    col="kurum_id";
+                                    col = "kurum_id";
                                     break;
                                 case 9:
-                                    col="tarih";
+                                    col = "tarih";
                                     break;
                                 default:
-                                    col="gider";
+                                    col = "gider";
                                     break;
                             }
                             System.out.println(col);
                             System.out.println(enteredText);
-                            List<KurumGiderleri> list = kdao.searchForGider(col,enteredText);
+                            List<KurumGiderleri> list = kdao.searchForGider(col, enteredText);
                             //Make a table for list
-                            GiderTableModel model =new GiderTableModel(list);
+                            GiderTableModel model = new GiderTableModel(list);
                             table1.setModel(model);
 
-                        }catch (Exception e1 ){
-                            JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+                        } catch (Exception e1) {
+                            JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 });
@@ -609,11 +614,11 @@ public class Form1 extends JFrame {
                     StokDAO sdao = new StokDAO();
                     List<Stok> list = sdao.getAllStok();
                     //Make a table for list
-                    StokTableModel model =new StokTableModel(list);
+                    StokTableModel model = new StokTableModel(list);
                     table1.setModel(model);
 
-                }catch (Exception e1 ){
-                    JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+                } catch (Exception e1) {
+                    JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
                 button5.addActionListener(new ActionListener() {
@@ -625,34 +630,34 @@ public class Form1 extends JFrame {
 
                         try {
                             StokDAO sdao = new StokDAO();
-                            String col ="";
+                            String col = "";
                             System.out.println(stokCombo.getSelectedIndex());
-                            switch (stokCombo.getSelectedIndex()){
+                            switch (stokCombo.getSelectedIndex()) {
                                 case 0:
-                                    col="stok_id";
+                                    col = "stok_id";
                                     break;
                                 case 1:
-                                    col="stok_türü";
+                                    col = "stok_türü";
                                     break;
                                 case 2:
-                                    col="miktar";
+                                    col = "miktar";
                                     break;
                                 case 3:
-                                    col="kurum_id";
+                                    col = "kurum_id";
                                     break;
                                 default:
-                                    col="stok_turu";
+                                    col = "stok_turu";
                                     break;
                             }
                             System.out.println(col);
                             System.out.println(enteredText);
-                            List<Stok> list = sdao.searchForStok(col,enteredText);
+                            List<Stok> list = sdao.searchForStok(col, enteredText);
                             //Make a table for list
-                            StokTableModel model =new StokTableModel(list);
+                            StokTableModel model = new StokTableModel(list);
                             table1.setModel(model);
 
-                        }catch (Exception e1 ){
-                            JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+                        } catch (Exception e1) {
+                            JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 });
@@ -671,4 +676,325 @@ public class Form1 extends JFrame {
     }
 
 
+    /**
+     * Method generated by IntelliJ IDEA GUI Designer
+     * >>> IMPORTANT!! <<<
+     * DO NOT edit this method OR call it in your code!
+     *
+     * @noinspection ALL
+     */
+    private void $$$setupUI$$$() {
+        createUIComponents();
+        panel1 = new JPanel();
+        panel1.setLayout(new GridBagLayout());
+        stuAtt = new JLabel();
+        stuAtt.setText("Aradığınız Öğrenci Özelliğini Seçin:");
+        GridBagConstraints gbc;
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 5;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(stuAtt, gbc);
+        dersAtt = new JLabel();
+        dersAtt.setText("Aradığınız Ders Özelliğini Seçin:");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 9;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(dersAtt, gbc);
+        giderAtt = new JLabel();
+        giderAtt.setText("Aradığınız Gider Özelliğini Seçin:");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 13;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(giderAtt, gbc);
+        stuCombo = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+        stuCombo.setModel(defaultComboBoxModel1);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 5;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(stuCombo, gbc);
+        dersCombo = new JComboBox();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 9;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(dersCombo, gbc);
+        giderCombo = new JComboBox();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 13;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(giderCombo, gbc);
+        stokCombo = new JComboBox();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 17;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(stokCombo, gbc);
+        stokAtt = new JLabel();
+        stokAtt.setText("Aradığınız Stok Özelliğini Seçin:");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 17;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(stokAtt, gbc);
+        gelenBilgiLabel.setHorizontalAlignment(10);
+        gelenBilgiLabel.setText("");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 4;
+        gbc.gridy = 1;
+        gbc.gridheight = 2;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        panel1.add(gelenBilgiLabel, gbc);
+        persAtt = new JLabel();
+        persAtt.setHorizontalAlignment(10);
+        persAtt.setText("Aradığınız Personel Özelliğini Seçin:");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(persAtt, gbc);
+        persCombo = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
+        persCombo.setModel(defaultComboBoxModel2);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(persCombo, gbc);
+        studentLabel = new JLabel();
+        studentLabel.setText("Öğrenci Numarasını Giriniz:");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 6;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(studentLabel, gbc);
+        StudentAtt = new JTextField();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 6;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(StudentAtt, gbc);
+        dersLabel = new JLabel();
+        dersLabel.setText("Ders Kodunu Giriniz:");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 10;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(dersLabel, gbc);
+        DersAtt = new JTextField();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 10;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(DersAtt, gbc);
+        öğrenciBilgisiButton = new JButton();
+        öğrenciBilgisiButton.setText("Öğrenci Bilgisi");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridheight = 3;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(öğrenciBilgisiButton, gbc);
+        dersBilgisiButton = new JButton();
+        dersBilgisiButton.setText("Ders Bilgisi");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+        gbc.gridheight = 3;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(dersBilgisiButton, gbc);
+        giderLabel = new JLabel();
+        giderLabel.setText("Gider Numarasını Giriniz:");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 14;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(giderLabel, gbc);
+        GiderAtt = new JTextField();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 14;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(GiderAtt, gbc);
+        button4 = new JButton();
+        button4.setText("Seç");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 15;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(button4, gbc);
+        stokLabel = new JLabel();
+        stokLabel.setText("Stok Numarasını Giriniz:");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 18;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(stokLabel, gbc);
+        StokAtt = new JTextField();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 18;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(StokAtt, gbc);
+        button5 = new JButton();
+        button5.setText("Seç");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 19;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(button5, gbc);
+        giderBilgisiButton = new JButton();
+        giderBilgisiButton.setText("Gider Bilgisi");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 13;
+        gbc.gridheight = 3;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(giderBilgisiButton, gbc);
+        stokBilgisiButton = new JButton();
+        stokBilgisiButton.setText("Stok Bilgisi");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 17;
+        gbc.gridheight = 3;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(stokBilgisiButton, gbc);
+        personelLabel = new JLabel();
+        personelLabel.setText("Personel Numarasını Giriniz:");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 2;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(personelLabel, gbc);
+        PersonelAtt = new JTextField();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 2;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(PersonelAtt, gbc);
+        button1 = new JButton();
+        button1.setText("Seç");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(button1, gbc);
+        personelBilgisiButton = new JButton();
+        personelBilgisiButton.setHideActionText(false);
+        personelBilgisiButton.setText("Personel Bilgisi");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridheight = 3;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel1.add(personelBilgisiButton, gbc);
+        final JScrollPane scrollPane1 = new JScrollPane();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 4;
+        gbc.gridy = 3;
+        gbc.gridheight = 18;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        panel1.add(scrollPane1, gbc);
+        table1 = new JTable();
+        scrollPane1.setViewportView(table1);
+        button2 = new JButton();
+        button2.setText("Seç");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 7;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(button2, gbc);
+        button3 = new JButton();
+        button3.setText("Seç");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 11;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(button3, gbc);
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    public JComponent $$$getRootComponent$$$() {
+        return panel1;
+    }
 }
