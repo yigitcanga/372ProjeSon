@@ -3,6 +3,7 @@ package org.proje.jdbc.dao;
 import org.proje.jdbc.model.*;
 import org.proje.jdbc.model.AylikGider;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -21,6 +22,28 @@ public class KurumGiderleriDAO extends DAO{
         kurumGiderleri.setGiderId(resultSet.getString("gider_id"));
         kurumGiderleri.setTarih(resultSet.getString("tarih"));
         return kurumGiderleri;
+    }
+
+
+    public void addGider(KurumGiderleri theGider) throws Exception{
+
+        PreparedStatement statement = null;
+
+        try {
+            statement = super.con.prepareStatement("insert into kurumgiderleri" + " (gider_id, gider, tutar, kurum_id, tarih)" + " values (?, ?, ?, ?, ?)");
+
+            statement.setString(1, theGider.getGiderId());
+            statement.setString(2, theGider.getGider());
+            statement.setString(3, theGider.getTutar());
+            statement.setString(4, theGider.getKurumId());
+            statement.setString(5, theGider.getTarih());
+
+            statement.executeUpdate();
+        }
+        catch (Exception e){
+            throw new Exception(e);
+        }
+
     }
     public HaftalikGider rowToHaftalikGider(ResultSet r) throws Exception{
         HaftalikGider h=new HaftalikGider();
@@ -72,17 +95,17 @@ public class KurumGiderleriDAO extends DAO{
 
             statement = super.con.createStatement();
             resultSet = statement.executeQuery("SELECT \n" +
-                    "  month_start,\n" +
-                    "  LAST_DAY(month_start) AS month_end,\n" +
-                    "  COALESCE(SUM(tutar)/2, 0) AS total_tutar\n" +
+                    "  all_months.month_start,\n" +
+                    "  LAST_DAY(all_months.month_start) AS month_end,\n" +
+                    "  COALESCE(SUM(kg.tutar) , 0) AS total_tutar\n" +
                     "FROM (\n" +
                     "  SELECT \n" +
-                    "    DATE_FORMAT(tarih, '%Y-%m-01') AS month_start\n" +
-                    "  FROM KurumGiderleri\n" +
-                    "  WHERE gider_id = 5003\n" +
-                    "  GROUP BY month_start\n" +
-                    "  UNION ALL\n" +
-                    "  SELECT \n" +
+                    "    DATE_FORMAT(DATE_ADD('2023-01-01', INTERVAL n MONTH), '%Y-%m-01') AS month_start\n" +
+                    "  FROM (\n" +
+                    "  SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL\n" +
+                    "  SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL\n" +
+                    "  SELECT 10 UNION ALL SELECT 11\n" +
+                    "  ) AS numbers \n" +
                     "    DATE_FORMAT(MAX(month_start), '%Y-%m-01') AS month_start\n" +
                     "  FROM (\n" +
                     "    SELECT \n" +

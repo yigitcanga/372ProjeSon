@@ -49,6 +49,7 @@ public class Form1 extends JFrame {
     private JTextField StokAtt;
     private JTable table1;
     private JButton dersEkleButton;
+    private JButton giderEkleButton;
 
     public void closeAllBut(int i) {
         switch (i) {
@@ -118,6 +119,7 @@ public class Form1 extends JFrame {
         GiderAtt.setVisible(false);
         button4.setVisible(false);
         giderLabel.setVisible(false);
+        giderEkleButton.setVisible(false);
     }
 
     public void kapatStokBilgisi() {
@@ -169,6 +171,7 @@ public class Form1 extends JFrame {
         giderAtt.setVisible(false);
         stokAtt.setVisible(false);
         dersEkleButton.setVisible(false);
+        giderEkleButton.setVisible(false);
         //persAttButton.setVisible(false);
         //stuAttButton.setVisible(false);
         //dersAttButton.setVisible(false);
@@ -623,6 +626,7 @@ public class Form1 extends JFrame {
                     }
                 });
 
+                giderEkleButton.setVisible(!giderEkleButton.isVisible());
                 button4.setVisible(!button4.isVisible());
                 GiderAtt.setVisible(!GiderAtt.isVisible());
                 giderLabel.setVisible(!giderLabel.isVisible());
@@ -638,6 +642,23 @@ public class Form1 extends JFrame {
                 } catch (Exception e1) {
                     JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
                 }
+
+
+                giderEkleButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        KurumGiderleriDAO giderDAO = null;
+                        try {
+                            giderDAO = new KurumGiderleriDAO();
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        AddGider dialog = new AddGider(Form1.this, giderDAO);
+                        dialog.setVisible(true);
+
+                    }
+                });
 
                 button4.addActionListener(new ActionListener() {
                     @Override
@@ -869,7 +890,7 @@ public class Form1 extends JFrame {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 5;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
@@ -879,7 +900,7 @@ public class Form1 extends JFrame {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 9;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
@@ -889,7 +910,7 @@ public class Form1 extends JFrame {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 13;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
@@ -898,7 +919,7 @@ public class Form1 extends JFrame {
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         stuCombo.setModel(defaultComboBoxModel1);
         gbc = new GridBagConstraints();
-        gbc.gridx = 4;
+        gbc.gridx = 5;
         gbc.gridy = 5;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
@@ -906,7 +927,7 @@ public class Form1 extends JFrame {
         panel1.add(stuCombo, gbc);
         dersCombo = new JComboBox();
         gbc = new GridBagConstraints();
-        gbc.gridx = 4;
+        gbc.gridx = 5;
         gbc.gridy = 9;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
@@ -914,7 +935,7 @@ public class Form1 extends JFrame {
         panel1.add(dersCombo, gbc);
         giderCombo = new JComboBox();
         gbc = new GridBagConstraints();
-        gbc.gridx = 4;
+        gbc.gridx = 5;
         gbc.gridy = 13;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
@@ -922,7 +943,7 @@ public class Form1 extends JFrame {
         panel1.add(giderCombo, gbc);
         stokCombo = new JComboBox();
         gbc = new GridBagConstraints();
-        gbc.gridx = 4;
+        gbc.gridx = 5;
         gbc.gridy = 17;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
@@ -933,7 +954,7 @@ public class Form1 extends JFrame {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 17;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
@@ -942,7 +963,7 @@ public class Form1 extends JFrame {
         gelenBilgiLabel.setHorizontalAlignment(10);
         gelenBilgiLabel.setText("");
         gbc = new GridBagConstraints();
-        gbc.gridx = 6;
+        gbc.gridx = 7;
         gbc.gridy = 1;
         gbc.gridheight = 2;
         gbc.weightx = 1.0;
@@ -955,7 +976,7 @@ public class Form1 extends JFrame {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 1;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
@@ -964,7 +985,7 @@ public class Form1 extends JFrame {
         final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
         persCombo.setModel(defaultComboBoxModel2);
         gbc = new GridBagConstraints();
-        gbc.gridx = 4;
+        gbc.gridx = 5;
         gbc.gridy = 1;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
@@ -975,14 +996,14 @@ public class Form1 extends JFrame {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 6;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
         panel1.add(studentLabel, gbc);
         StudentAtt = new JTextField();
         gbc = new GridBagConstraints();
-        gbc.gridx = 4;
+        gbc.gridx = 5;
         gbc.gridy = 6;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
@@ -994,14 +1015,14 @@ public class Form1 extends JFrame {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 10;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
         panel1.add(dersLabel, gbc);
         DersAtt = new JTextField();
         gbc = new GridBagConstraints();
-        gbc.gridx = 4;
+        gbc.gridx = 5;
         gbc.gridy = 10;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
@@ -1033,14 +1054,14 @@ public class Form1 extends JFrame {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 14;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
         panel1.add(giderLabel, gbc);
         GiderAtt = new JTextField();
         gbc = new GridBagConstraints();
-        gbc.gridx = 4;
+        gbc.gridx = 5;
         gbc.gridy = 14;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
@@ -1050,7 +1071,7 @@ public class Form1 extends JFrame {
         button4 = new JButton();
         button4.setText("Seç");
         gbc = new GridBagConstraints();
-        gbc.gridx = 2;
+        gbc.gridx = 3;
         gbc.gridy = 15;
         gbc.gridwidth = 3;
         gbc.weightx = 1.0;
@@ -1061,14 +1082,14 @@ public class Form1 extends JFrame {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 18;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
         panel1.add(stokLabel, gbc);
         StokAtt = new JTextField();
         gbc = new GridBagConstraints();
-        gbc.gridx = 4;
+        gbc.gridx = 5;
         gbc.gridy = 18;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
@@ -1080,7 +1101,7 @@ public class Form1 extends JFrame {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 19;
-        gbc.gridwidth = 3;
+        gbc.gridwidth = 4;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         panel1.add(button5, gbc);
@@ -1109,14 +1130,14 @@ public class Form1 extends JFrame {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 2;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
         panel1.add(personelLabel, gbc);
         PersonelAtt = new JTextField();
         gbc = new GridBagConstraints();
-        gbc.gridx = 4;
+        gbc.gridx = 5;
         gbc.gridy = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
@@ -1127,7 +1148,7 @@ public class Form1 extends JFrame {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 3;
-        gbc.gridwidth = 3;
+        gbc.gridwidth = 4;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         panel1.add(button1, gbc);
@@ -1144,7 +1165,7 @@ public class Form1 extends JFrame {
         panel1.add(personelBilgisiButton, gbc);
         final JScrollPane scrollPane1 = new JScrollPane();
         gbc = new GridBagConstraints();
-        gbc.gridx = 6;
+        gbc.gridx = 7;
         gbc.gridy = 3;
         gbc.gridheight = 18;
         gbc.weightx = 1.0;
@@ -1158,14 +1179,14 @@ public class Form1 extends JFrame {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 7;
-        gbc.gridwidth = 3;
+        gbc.gridwidth = 4;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         panel1.add(button2, gbc);
         button3 = new JButton();
         button3.setText("Seç");
         gbc = new GridBagConstraints();
-        gbc.gridx = 3;
+        gbc.gridx = 4;
         gbc.gridy = 11;
         gbc.gridwidth = 2;
         gbc.weightx = 1.0;
@@ -1173,7 +1194,7 @@ public class Form1 extends JFrame {
         panel1.add(button3, gbc);
         final JPanel spacer1 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 5;
+        gbc.gridx = 6;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.VERTICAL;
         panel1.add(spacer1, gbc);
@@ -1182,8 +1203,16 @@ public class Form1 extends JFrame {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 11;
+        gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(dersEkleButton, gbc);
+        giderEkleButton = new JButton();
+        giderEkleButton.setText("Gider Ekle");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 15;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(giderEkleButton, gbc);
     }
 
     /**
@@ -1374,6 +1403,168 @@ public class Form1 extends JFrame {
             gbc.anchor = GridBagConstraints.WEST;
             gbc.fill = GridBagConstraints.HORIZONTAL;
             panel3.add(DersKoduText, gbc);
+        }
+
+        /**
+         * @noinspection ALL
+         */
+        public JComponent $$$getRootComponent$$$() {
+            return contentPane;
+        }
+    }
+
+    public void refreshGiderView() {
+        try {
+            KurumGiderleriDAO gdao = new KurumGiderleriDAO();
+            List<KurumGiderleri> liste = gdao.getAllKurumGiderleri();
+            //Make a table for list
+            GiderTableModel model = new GiderTableModel(liste);
+            table1.setModel(model);
+
+        } catch (Exception e1) {
+            JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+    public class AddGider extends JDialog {
+        private JPanel contentPane;
+        private JButton buttonOK;
+        private JButton buttonCancel;
+        private JTextField giderNoText;
+        private JTextField giderAdText;
+        private JTextField giderTutarText;
+        private JTextField giderKurumText;
+        private JTextField giderTarihText;
+
+        private KurumGiderleriDAO giderDAO;
+        private Form1 form1;
+
+        public AddGider(Form1 theform1, KurumGiderleriDAO thegiderDAO) {
+            this();
+            form1 = theform1;
+            giderDAO = thegiderDAO;
+        }
+
+        public AddGider() {
+            setContentPane(contentPane);
+            setModal(true);
+            getRootPane().setDefaultButton(buttonOK);
+
+            this.setBounds(200, 100, 600, 400);
+
+            buttonOK.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    saveGider();
+                }
+            });
+
+            buttonCancel.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    onCancel();
+                }
+            });
+
+            // call onCancel() when cross is clicked
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+            addWindowListener(new WindowAdapter() {
+                public void windowClosing(WindowEvent e) {
+                    onCancel();
+                }
+            });
+
+            // call onCancel() on ESCAPE
+            contentPane.registerKeyboardAction(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    onCancel();
+                }
+            }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        }
+
+        protected void saveGider() {
+            String giderId = giderNoText.getText();
+            String gider = giderAdText.getText();
+            String tutar = giderTutarText.getText();
+            String kurumId = giderKurumText.getText();
+            String tarih = giderTarihText.getText();
+
+            KurumGiderleri tempGider = new KurumGiderleri(giderId, gider, tutar, kurumId, tarih);
+
+            try {
+                giderDAO.addGider(tempGider);
+
+                setVisible(false);
+                dispose();
+
+                form1.refreshGiderView();
+
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(form1, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        private void onCancel() {
+            // add your code here if necessary
+            dispose();
+        }
+
+        public void main(String[] args) {
+            AddGider dialog = new AddGider();
+            dialog.pack();
+            dialog.setVisible(true);
+            System.exit(0);
+        }
+
+        {
+// GUI initializer generated by IntelliJ IDEA GUI Designer
+// >>> IMPORTANT!! <<<
+// DO NOT EDIT OR ADD ANY CODE HERE!
+            $$$setupUI$$$();
+        }
+
+        /**
+         * Method generated by IntelliJ IDEA GUI Designer
+         * >>> IMPORTANT!! <<<
+         * DO NOT edit this method OR call it in your code!
+         *
+         * @noinspection ALL
+         */
+        private void $$$setupUI$$$() {
+            contentPane = new JPanel();
+            contentPane.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(6, 3, new Insets(10, 10, 10, 10), -1, -1));
+            buttonCancel = new JButton();
+            buttonCancel.setText("Cancel");
+            contentPane.add(buttonCancel, new com.intellij.uiDesigner.core.GridConstraints(5, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            buttonOK = new JButton();
+            buttonOK.setText("Ekle");
+            contentPane.add(buttonOK, new com.intellij.uiDesigner.core.GridConstraints(5, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
+            contentPane.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+            final JLabel label1 = new JLabel();
+            label1.setText("Gider Numarası");
+            contentPane.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            final JLabel label2 = new JLabel();
+            label2.setText("Gider Adı");
+            contentPane.add(label2, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            final JLabel label3 = new JLabel();
+            label3.setText("Gider Tutarı");
+            contentPane.add(label3, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            final JLabel label4 = new JLabel();
+            label4.setText("Kurum Numarası");
+            contentPane.add(label4, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            final JLabel label5 = new JLabel();
+            label5.setText("Gider Tarihi");
+            contentPane.add(label5, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            giderNoText = new JTextField();
+            contentPane.add(giderNoText, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+            giderAdText = new JTextField();
+            contentPane.add(giderAdText, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+            giderTutarText = new JTextField();
+            contentPane.add(giderTutarText, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+            giderKurumText = new JTextField();
+            contentPane.add(giderKurumText, new com.intellij.uiDesigner.core.GridConstraints(3, 1, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+            giderTarihText = new JTextField();
+            contentPane.add(giderTarihText, new com.intellij.uiDesigner.core.GridConstraints(4, 1, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         }
 
         /**
