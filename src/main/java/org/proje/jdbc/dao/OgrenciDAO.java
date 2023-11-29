@@ -1,6 +1,7 @@
 package org.proje.jdbc.dao;
 
 import org.proje.jdbc.model.Dersler;
+import org.proje.jdbc.model.GunSaat;
 import org.proje.jdbc.model.Ogrenci;
 
 import java.sql.*;
@@ -37,6 +38,43 @@ public class OgrenciDAO extends DAO{
         ogrenci.setSoyad(resultSet.getString("soyad"));
 
         return ogrenci;
+    }
+    public GunSaat rowToGS(ResultSet r) throws Exception{
+        GunSaat gs = new GunSaat();
+        gs.setSaat(r.getString("saat"));
+        gs.setGun(r.getString("gün"));
+        return gs;
+    }
+    public List<GunSaat> getAllGS(String val) throws Exception {
+
+        List<GunSaat> list = new ArrayList<>();
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        String value="'";
+        value=value.concat(val).concat("'");
+
+        try {
+
+            statement = super.con.createStatement();
+            resultSet = statement.executeQuery("SELECT m.gün, ms.saat\n" +
+                    "\tFROM Öğrenci o\n" +
+                    "\tJOIN ÖğrenciMüsaitlikDurumu m ON o.okul_no = m.okul_no\n" +
+                    "\tJOIN MüsaitSaatler ms ON m.saat_id = ms.id\n" +
+                    "\tWHERE o.okul_no  =  "+value);
+
+            while (resultSet.next()){
+                GunSaat gs = rowToGS(resultSet);
+                list.add(gs);
+
+            }
+
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+
+        return  list;
     }
     public List<Ogrenci> getAllDersOgrenciMin(String val) throws Exception {
 

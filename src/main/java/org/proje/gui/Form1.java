@@ -184,6 +184,7 @@ public class Form1 extends JFrame {
         persCombo.addItem("Personel Adresi");
         persCombo.addItem("Personel Maaşı");
         persCombo.addItem("Personel Kurum Numarası");
+        persCombo.addItem("Müsait Zaman Part Time Personel Id");
 
         stuCombo.addItem("Öğrenci Numarası");
         stuCombo.addItem("Öğrenci Adı");
@@ -198,6 +199,7 @@ public class Form1 extends JFrame {
         stuCombo.addItem("Öğrenci TC Kimlik Numarası");
         stuCombo.addItem("Veli Ara");
         stuCombo.addItem("Tüm Veliler");
+        stuCombo.addItem("Müsait Saatler Okul No");
 
         dersCombo.addItem("Ders Kodu");
         dersCombo.addItem("Ders Adı");
@@ -270,44 +272,61 @@ public class Form1 extends JFrame {
                             PersonelDAO pdao = new PersonelDAO();
                             String col = "";
                             System.out.println(persCombo.getSelectedIndex());
+                            List<Personel> list = null;
+                            List<GunSaat> list1 = null;
                             switch (persCombo.getSelectedIndex()) {
                                 case 0:
                                     col = "personel_id";
+                                    list = pdao.searchForPersonel(col, enteredText);
                                     break;
                                 case 1:
                                     col = "ad";
+                                    list = pdao.searchForPersonel(col, enteredText);
                                     break;
                                 case 2:
                                     col = "soyad";
+                                    list = pdao.searchForPersonel(col, enteredText);
                                     break;
                                 case 3:
                                     col = "tc_kimlik";
+                                    list = pdao.searchForPersonel(col, enteredText);
                                     break;
                                 case 4:
                                     col = "tel_no";
+                                    list = pdao.searchForPersonel(col, enteredText);
                                     break;
                                 case 5:
                                     col = "mail";
+                                    list = pdao.searchForPersonel(col, enteredText);
                                     break;
                                 case 6:
                                     col = "adres";
+                                    list = pdao.searchForPersonel(col, enteredText);
                                     break;
                                 case 7:
                                     col = "maaş";
+                                    list = pdao.searchForPersonel(col, enteredText);
                                     break;
                                 case 8:
                                     col = "kurum_id";
+                                    list = pdao.searchForPersonel(col, enteredText);
+                                    break;
+                                case 9:
+                                    list1 = pdao.getAllGS(enteredText);
                                     break;
                                 default:
                                     col = "ad";
+                                    list = pdao.searchForPersonel(col, enteredText);
                                     break;
                             }
-                            System.out.println(col);
-                            System.out.println(enteredText);
-                            List<Personel> list = pdao.searchForPersonel(col, enteredText);
-                            //Make a table for list
-                            PersonelTableModel model = new PersonelTableModel(list);
-                            table1.setModel(model);
+                            if (list != null) {
+                                PersonelTableModel model = new PersonelTableModel(list);
+                                table1.setModel(model);
+                            } else if (list1 != null) {
+                                MusaitTM model = new MusaitTM(list1);
+                                table1.setModel(model);
+                            }
+
 
                         } catch (Exception e1) {
                             JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
@@ -367,6 +386,7 @@ public class Form1 extends JFrame {
 
                             List<Ogrenci> list = null;
                             List<Veli> list1 = null;
+                            List<GunSaat> list2 = null;
 
                             switch (stuCombo.getSelectedIndex()) {
                                 case 0:
@@ -418,6 +438,10 @@ public class Form1 extends JFrame {
                                     break;
                                 case 12:
                                     list1 = veli.getAllVeli();
+                                    break;
+                                case 13:
+                                    list2 = odao.getAllGS(enteredText);
+                                    break;
                                 default:
                                     col = "ad";
                                     break;
@@ -430,6 +454,9 @@ public class Form1 extends JFrame {
                                 table1.setModel(model);
                             } else if (list1 != null) {
                                 VeliTableModel model = new VeliTableModel(list1);
+                                table1.setModel(model);
+                            } else if (list2 != null) {
+                                MusaitTM model = new MusaitTM(list2);
                                 table1.setModel(model);
                             }
                             //Make a table for list
