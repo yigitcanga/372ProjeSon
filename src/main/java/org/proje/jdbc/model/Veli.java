@@ -2,14 +2,14 @@ package org.proje.jdbc.model;
 
 public class Veli {
 
-    String  okulNo,
+    String
             ad,
             soyad,
             telNo,
             mail;
 
-    public Veli(String okulNo, String ad, String soyad, String telNo, String mail) {
-        this.okulNo = okulNo;
+    public Veli(String ad, String soyad, String telNo, String mail) {
+
         this.ad = ad;
         this.soyad = soyad;
         this.telNo = telNo;
@@ -19,13 +19,13 @@ public class Veli {
     public Veli() {
     }
 
-    public String getOkulNo() {
+    /*public String getOkulNo() {
         return okulNo;
-    }
+    }*/
 
-    public void setOkulNo(String okulNo) {
+    /*public void setOkulNo(String okulNo) {
         this.okulNo = okulNo;
-    }
+    }*/
 
     public String getAd() {
         return ad;
@@ -59,14 +59,4 @@ public class Veli {
         this.mail = mail;
     }
 
-    @Override
-    public String toString() {
-        return "Veli{" +
-                "okulNo='" + okulNo + '\'' +
-                ", ad='" + ad + '\'' +
-                ", soyad='" + soyad + '\'' +
-                ", telNo='" + telNo + '\'' +
-                ", mail='" + mail + '\'' +
-                '}';
-    }
 }

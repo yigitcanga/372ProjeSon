@@ -196,6 +196,8 @@ public class Form1 extends JFrame {
         stuCombo.addItem("Öğrenci Mezunluk Durumu");
         stuCombo.addItem("Öğrenci Kurum Numarası");
         stuCombo.addItem("Öğrenci TC Kimlik Numarası");
+        stuCombo.addItem("Veli Ara");
+        stuCombo.addItem("Tüm Veliler");
 
         dersCombo.addItem("Ders Kodu");
         dersCombo.addItem("Ders Adı");
@@ -358,52 +360,79 @@ public class Form1 extends JFrame {
 
                         try {
                             OgrenciDAO odao = new OgrenciDAO();
+                            VeliDAO veli = new VeliDAO();
                             String col = "";
                             System.out.println(stuCombo.getSelectedIndex());
+
+                            List<Ogrenci> list = null;
+                            List<Veli> list1 = null;
+
                             switch (stuCombo.getSelectedIndex()) {
                                 case 0:
                                     col = "okul_no";
+                                    list = odao.searchForOgrenci(col, enteredText);
                                     break;
                                 case 1:
                                     col = "ad";
+                                    list = odao.searchForOgrenci(col, enteredText);
                                     break;
                                 case 2:
                                     col = "soyad";
+                                    list = odao.searchForOgrenci(col, enteredText);
                                     break;
                                 case 3:
                                     col = "doğum_tarihi";
+                                    list = odao.searchForOgrenci(col, enteredText);
                                     break;
                                 case 4:
                                     col = "mail";
+                                    list = odao.searchForOgrenci(col, enteredText);
                                     break;
                                 case 5:
                                     col = "tel_no";
+                                    list = odao.searchForOgrenci(col, enteredText);
                                     break;
                                 case 6:
                                     col = "sınıf";
+                                    list = odao.searchForOgrenci(col, enteredText);
                                     break;
                                 case 7:
                                     col = "adres";
+                                    list = odao.searchForOgrenci(col, enteredText);
                                     break;
                                 case 8:
                                     col = "mezun_mu";
+                                    list = odao.searchForOgrenci(col, enteredText);
                                     break;
                                 case 9:
                                     col = "kurum_id";
+                                    list = odao.searchForOgrenci(col, enteredText);
                                     break;
                                 case 10:
                                     col = "tc_kimlik";
+                                    list = odao.searchForOgrenci(col, enteredText);
                                     break;
+                                case 11:
+                                    list1 = veli.searchForVeli(enteredText);
+                                    break;
+                                case 12:
+                                    list1 = veli.getAllVeli();
                                 default:
                                     col = "ad";
                                     break;
                             }
                             System.out.println(col);
                             System.out.println(enteredText);
-                            List<Ogrenci> list = odao.searchForOgrenci(col, enteredText);
+                            if (list != null) {
+
+                                OgrenciTableModel model = new OgrenciTableModel(list);
+                                table1.setModel(model);
+                            } else if (list1 != null) {
+                                VeliTableModel model = new VeliTableModel(list1);
+                                table1.setModel(model);
+                            }
                             //Make a table for list
-                            OgrenciTableModel model = new OgrenciTableModel(list);
-                            table1.setModel(model);
+
 
                         } catch (Exception e1) {
                             JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);

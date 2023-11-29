@@ -18,7 +18,7 @@ public class VeliDAO extends DAO{
         veli.setAd(resultSet.getString("ad"));
         veli.setMail(resultSet.getString("mail"));
         veli.setSoyad(resultSet.getString("soyad"));
-        veli.setOkulNo(resultSet.getString("okul_no"));
+        //veli.setOkulNo(resultSet.getString("okul_no"));
         veli.setTelNo(resultSet.getString("tel_no"));
         return veli;
     }
@@ -33,7 +33,35 @@ public class VeliDAO extends DAO{
         try {
 
             statement = super.con.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM veli");
+            resultSet = statement.executeQuery("SELECT ad,soyad,tel_no,mail FROM veli");
+
+            while (resultSet.next()){
+                Veli veli = rowToVeli(resultSet);
+                list.add(veli);
+
+            }
+
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+
+        return  list;
+    }
+    public List<Veli> searchForVeli(String okul_no) throws Exception{
+        List<Veli> list = new ArrayList<>();
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        String value="'";
+        value=value.concat(okul_no).concat("'");
+
+        try {
+
+            statement = super.con.createStatement();
+            resultSet = statement.executeQuery("SELECT Veli.ad, Veli.soyad, Veli.tel_no, Veli.mail\n" +
+                    "FROM Veli\n" +
+                    "WHERE Veli.okul_no="+value);
 
             while (resultSet.next()){
                 Veli veli = rowToVeli(resultSet);
