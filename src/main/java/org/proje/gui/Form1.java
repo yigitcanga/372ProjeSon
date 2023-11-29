@@ -212,6 +212,7 @@ public class Form1 extends JFrame {
         stokCombo.addItem("Stok Türü");
         stokCombo.addItem("Stok Miktarı");
         stokCombo.addItem("Stok Kurum Numarası");
+        stokCombo.addItem("Stok Ders Kodu");
 
         //Umarım bitmiş personel sekmesi
         personelBilgisiButton.addActionListener(new ActionListener() {
@@ -618,6 +619,18 @@ public class Form1 extends JFrame {
                         String selectedOption = stokCombo.getSelectedItem().toString();
                         String yeniBilgi = selectedOption + " giriniz.";
                         stokLabel.setText(yeniBilgi);
+                        try {
+                            switch (stokCombo.getSelectedIndex()) {
+                                case 4:
+                                    StokDAO sdao = new StokDAO();
+                                    List<DersStok> list = sdao.getAllDersStok();
+                                    DersStokTableModel model = new DersStokTableModel(list);
+                                    table1.setModel(model);
+                                    break;
+                            }
+                        } catch (Exception e1) {
+                            JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
+                        }
 
 
                     }
@@ -645,6 +658,9 @@ public class Form1 extends JFrame {
                         String yeniBilgi = enteredText + " için veritabanı bilgisi burada!";
                         gelenBilgiLabel.setText(yeniBilgi);
 
+                        List<Stok> list = null;
+                        List<DersStok> list1 = null;
+
                         try {
                             StokDAO sdao = new StokDAO();
                             String col = "";
@@ -652,26 +668,40 @@ public class Form1 extends JFrame {
                             switch (stokCombo.getSelectedIndex()) {
                                 case 0:
                                     col = "stok_id";
+                                    list = sdao.searchForStok(col, enteredText);
                                     break;
                                 case 1:
                                     col = "stok_türü";
+                                    list = sdao.searchForStok(col, enteredText);
                                     break;
                                 case 2:
                                     col = "miktar";
+                                    list = sdao.searchForStok(col, enteredText);
                                     break;
                                 case 3:
                                     col = "kurum_id";
+                                    list = sdao.searchForStok(col, enteredText);
+                                    break;
+                                case 4:
+                                    list1 = sdao.searchForDersStok(enteredText);
                                     break;
                                 default:
-                                    col = "stok_turu";
+                                    col = "stok_türü";
+                                    list = sdao.searchForStok(col, enteredText);
                                     break;
                             }
-                            System.out.println(col);
-                            System.out.println(enteredText);
-                            List<Stok> list = sdao.searchForStok(col, enteredText);
+                            //System.out.println(col);
+                            //System.out.println(enteredText);
+                            //List<Stok> list = sdao.searchForStok(col, enteredText);
                             //Make a table for list
-                            StokTableModel model = new StokTableModel(list);
-                            table1.setModel(model);
+                            if (list != null) {
+                                StokTableModel model = new StokTableModel(list);
+                                table1.setModel(model);
+                            } else if (list1 != null) {
+                                DersStokTableModel model = new DersStokTableModel(list1);
+                                table1.setModel(model);
+                            }
+
 
                         } catch (Exception e1) {
                             JOptionPane.showMessageDialog(Form1.this, "Error:" + e1, "Error", JOptionPane.ERROR_MESSAGE);
