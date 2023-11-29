@@ -200,6 +200,7 @@ public class Form1 extends JFrame {
         dersCombo.addItem("Ders Adı");
         dersCombo.addItem("Öğrenci Okul Numarası");
         dersCombo.addItem("Öğretmen Id");
+        dersCombo.addItem("Tüm Bilgilerle Ders Kodu");
 
         giderCombo.addItem("Gider Numarası");
         giderCombo.addItem("Gider Adı");
@@ -462,6 +463,7 @@ public class Form1 extends JFrame {
 
                             List<Ders> list = null;
                             List<Dersler> dersler = null;
+                            List<DersKoduTumBilgiler> ders = null;
                             switch (dersCombo.getSelectedIndex()) {
                                 case 0:
                                     col = "ders_kodu";
@@ -479,6 +481,9 @@ public class Form1 extends JFrame {
                                     col = "personel_id";
                                     dersler = ogretmenDAO.getDersler(enteredText);
                                     break;
+                                case 4:
+                                    ders = ddao.searchForDersAllAttrb(enteredText);
+                                    break;
                                 default:
                                     col = "ders_kodu";
                                     break;
@@ -493,6 +498,9 @@ public class Form1 extends JFrame {
                                 table1.setModel(model);
                             } else if (dersler != null) {
                                 OgrDersTableModel model1 = new OgrDersTableModel(dersler);
+                                table1.setModel(model1);
+                            } else if (ders != null) {
+                                DersTumTableModel model1 = new DersTumTableModel(ders);
                                 table1.setModel(model1);
                             }
 
