@@ -193,6 +193,8 @@ public class Form1 extends JFrame {
 
         dersCombo.addItem("Ders Kodu");
         dersCombo.addItem("Ders Adı");
+        dersCombo.addItem("Öğrenci Okul Numarası");
+        dersCombo.addItem("Öğretmen Id");
 
         giderCombo.addItem("Gider Numarası");
         giderCombo.addItem("Gider Adı");
