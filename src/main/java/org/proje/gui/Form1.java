@@ -424,7 +424,16 @@ public class Form1 extends JFrame {
                 dersCombo.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        String selectedOption = dersCombo.getSelectedItem().toString();
+                        String selectedOption = "";
+
+                        switch (dersCombo.getSelectedIndex()) {
+                            case 4:
+                                selectedOption = "Ders Kodu";
+                                break;
+                            default:
+                                selectedOption = dersCombo.getSelectedItem().toString();
+                                break;
+                        }
                         String yeniBilgi = selectedOption + " giriniz.";
                         dersLabel.setText(yeniBilgi);
 
