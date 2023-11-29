@@ -34,6 +34,12 @@ public class Ogrenci {
         this.tcKimlik = tcKimlik;
     }
 
+    public Ogrenci(String okulNo, String ad, String soyad) {
+        this.okulNo = okulNo;
+        this.ad = ad;
+        this.soyad = soyad;
+    }
+
     public Ogrenci() {
     }
 

@@ -29,6 +29,45 @@ public class OgrenciDAO extends DAO{
 
         return ogrenci;
     }
+    public Ogrenci rowToOgrenciMin(ResultSet resultSet) throws Exception {
+        Ogrenci ogrenci = new Ogrenci();
+
+        ogrenci.setOkulNo(resultSet.getString("okul_no"));
+        ogrenci.setAd(resultSet.getString("ad"));
+        ogrenci.setSoyad(resultSet.getString("soyad"));
+
+        return ogrenci;
+    }
+    public List<Ogrenci> getAllDersOgrenciMin(String val) throws Exception {
+
+        List<Ogrenci> list = new ArrayList<>();
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        String value="'";
+        value=value.concat(val).concat("'");
+
+        try {
+
+            statement = super.con.createStatement();
+            resultSet = statement.executeQuery("SELECT Öğrenci.ad, Öğrenci.soyad, Öğrenci.okul_no\n" +
+                    "FROM Öğrenci\n" +
+                    "JOIN DersiAlır ON Öğrenci.okul_no = DersiAlır.okul_no\n" +
+                    "WHERE DersiAlır.ders_kodu = "+value);
+
+            while (resultSet.next()){
+                Ogrenci ogrenci = rowToOgrenciMin(resultSet);
+                list.add(ogrenci);
+
+            }
+
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+
+        return  list;
+    }
     public Dersler rowToDersler(ResultSet resultSet) throws Exception{
         Dersler dersler = new Dersler();
         dersler.setDers_adi(resultSet.getString("aldığı_ders"));
