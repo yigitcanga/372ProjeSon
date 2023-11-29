@@ -761,7 +761,7 @@ public class Form1 extends JFrame {
         gelenBilgiLabel.setHorizontalAlignment(10);
         gelenBilgiLabel.setText("");
         gbc = new GridBagConstraints();
-        gbc.gridx = 4;
+        gbc.gridx = 5;
         gbc.gridy = 1;
         gbc.gridheight = 2;
         gbc.weightx = 1.0;
@@ -957,7 +957,7 @@ public class Form1 extends JFrame {
         panel1.add(personelBilgisiButton, gbc);
         final JScrollPane scrollPane1 = new JScrollPane();
         gbc = new GridBagConstraints();
-        gbc.gridx = 4;
+        gbc.gridx = 5;
         gbc.gridy = 3;
         gbc.gridheight = 18;
         gbc.weightx = 1.0;
@@ -984,6 +984,12 @@ public class Form1 extends JFrame {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         panel1.add(button3, gbc);
+        final JPanel spacer1 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 4;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel1.add(spacer1, gbc);
     }
 
     /**

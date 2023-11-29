@@ -91,7 +91,7 @@
       </component>
       <component id="7ecab" class="javax.swing.JLabel" binding="gelenBilgiLabel" custom-create="true">
         <constraints>
-          <grid row="1" column="4" row-span="2" col-span="1" vsize-policy="0" hsize-policy="4" anchor="9" fill="0" indent="0" use-parent-layout="false">
+          <grid row="1" column="5" row-span="2" col-span="1" vsize-policy="0" hsize-policy="4" anchor="9" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="237" height="16"/>
           </grid>
           <gridbag weightx="1.0" weighty="1.0"/>
@@ -341,7 +341,7 @@
       </component>
       <scrollpane id="d7c89">
         <constraints>
-          <grid row="3" column="4" row-span="18" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="5" row-span="18" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <gridbag weightx="1.0" weighty="1.0"/>
         </constraints>
         <properties/>
@@ -379,6 +379,12 @@
           <text value="Seç"/>
         </properties>
       </component>
+      <vspacer id="a006b">
+        <constraints>
+          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+      </vspacer>
     </children>
   </grid>
 </form>
