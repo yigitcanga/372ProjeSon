@@ -1,14 +1,8 @@
 package org.proje.gui;
 
-import org.proje.gui.tableModels.GiderTableModel;
-import org.proje.gui.tableModels.OgrenciTableModel;
-import org.proje.gui.tableModels.PersonelTableModel;
-import org.proje.gui.tableModels.StokTableModel;
+import org.proje.gui.tableModels.*;
 import org.proje.jdbc.dao.*;
-import org.proje.jdbc.model.KurumGiderleri;
-import org.proje.jdbc.model.Ogrenci;
-import org.proje.jdbc.model.Personel;
-import org.proje.jdbc.model.Stok;
+import org.proje.jdbc.model.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -419,9 +413,31 @@ public class Form1 extends JFrame {
                 String yeniBilgi = selectedOption + " giriniz.";
                 dersLabel.setText(yeniBilgi);
 
+                dersCombo.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String selectedOption = dersCombo.getSelectedItem().toString();
+                        String yeniBilgi = selectedOption + " giriniz.";
+                        dersLabel.setText(yeniBilgi);
+
+
+                    }
+                });
+
                 button3.setVisible(!button3.isVisible());
                 DersAtt.setVisible(!DersAtt.isVisible());
                 dersLabel.setVisible(!dersLabel.isVisible());
+
+                try {
+                    DersDAO ddao = new DersDAO();
+                    List<Ders> liste = ddao.getAllDers();
+                    //Make a table for list
+                    DersTableModel model =new DersTableModel(liste);
+                    table1.setModel(model);
+
+                }catch (Exception e1 ){
+                    JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+                }
 
                 button3.addActionListener(new ActionListener() {
                     @Override
@@ -429,6 +445,53 @@ public class Form1 extends JFrame {
                         String enteredText = DersAtt.getText();
                         String yeniBilgi = enteredText + " için veritabanı bilgisi burada!";
                         gelenBilgiLabel.setText(yeniBilgi);
+
+                        try {
+                            DersDAO ddao = new DersDAO();
+                            OgretmenDAO ogretmenDAO = new OgretmenDAO();
+                            OgrenciDAO ogrenciDAO = new OgrenciDAO();
+                            String col ="";
+                            //System.out.println(dersCombo.getSelectedIndex());
+
+                            List<Ders> list = null;
+                            List<Dersler> dersler = null;
+                            switch (dersCombo.getSelectedIndex()){
+                                case 0:
+                                    col="ders_kodu";
+                                    list = ddao.searchForDers(col,enteredText);
+                                    break;
+                                case 1:
+                                    col="ders_adı";
+                                    list = ddao.searchForDers(col,enteredText);
+                                    break;
+                                case 2:
+                                    col = "okul_no";
+                                    dersler = ogrenciDAO.getDersler(enteredText);
+                                    break;
+                                case 3:
+                                    col = "personel_id";
+                                    dersler = ogretmenDAO.getDersler(enteredText);
+                                    break;
+                                default:
+                                    col="ders_kodu";
+                                    break;
+                            }
+                            //System.out.println(col);
+                            //System.out.println(enteredText);
+                            //List<Ders> list = ddao.searchForDers(col,enteredText);
+                            //Make a table for list
+
+                            if(list!=null){
+                                DersTableModel model =new DersTableModel(list);
+                                table1.setModel(model);
+                            } else if (dersler!=null) {
+                                OgrDersTableModel model1 =new OgrDersTableModel(dersler);
+                                table1.setModel(model1);
+                            }
+
+                        }catch (Exception e1 ){
+                            JOptionPane.showMessageDialog(Form1.this,"Error:"+e1,"Error",JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 });
 

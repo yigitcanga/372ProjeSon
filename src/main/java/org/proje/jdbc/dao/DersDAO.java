@@ -46,4 +46,33 @@ public class DersDAO extends DAO{
         return  list;
     }
 
+    public List<Ders> searchForDers(String attrb,String val) throws Exception {
+
+        List<Ders> list = new ArrayList<>();
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        String value="'";
+        value=value.concat(val).concat("'");
+
+        try {
+
+            statement = super.con.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM ders WHERE ders." + attrb +" = "+value);
+            //resultSet = statement.executeQuery("SELECT * FROM öğrenci WHERE öğrenci.ad='Efe'");
+
+            while (resultSet.next()){
+                Ders ders = rowToDers(resultSet);
+                list.add(ders);
+
+            }
+
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+
+        return  list;
+    }
+
 }
